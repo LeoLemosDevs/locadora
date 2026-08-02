@@ -2,7 +2,7 @@
   "versao": 1,
   "nomeLocadora": "Locadora",
   "assinatura": "vídeo clube particular",
-  "atualizadoEm": "2026-08-02T18:37:07.274Z",
+  "atualizadoEm": "2026-08-02T18:42:48.616Z",
   "categorias": [
     "Ação",
     "Aventura",
@@ -19,6 +19,26 @@
     "Infantil"
   ],
   "filmes": [
+    {
+      "titulo": "FURIA DO DRAGÃO",
+      "tituloOriginal": "",
+      "ano": 1972,
+      "duracao": null,
+      "classificacao": "14",
+      "nota": 8,
+      "faixa": "Bronze",
+      "sinopse": "Chen Zhen (Bruce Lee) retorna a Xangai e descobre que seu mestre de Kung Fu morreu em circunstâncias misteriosas. Ao investigar, descobre que a morte está ligada a tensões entre chineses e japoneses e a uma escola rival. Movido pela vingança, Chen enfrenta os assassinos de seu mestre e se torna símbolo da resistência chinesa contra a opressão.",
+      "capa": "https://br.web.img3.acsta.net/r_1280_720/pictures/210/139/21013967_20130619190523748.jpg",
+      "fundo": "",
+      "generos": [
+        "Artes Marciais"
+      ],
+      "destaque": false,
+      "url": "https://youtu.be/5a7tOgq5EFk",
+      "fonte": "youtube",
+      "id": "9374d309",
+      "adicionadoEm": "2026-08-02T18:42:48.615Z"
+    },
     {
       "titulo": "ÁGUIA NEGRA",
       "tituloOriginal": "",
