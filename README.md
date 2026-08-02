@@ -335,6 +335,36 @@ Para trocar os dizeres, mexa na lista **`AVISOS`** em `assets/js/app.js` — cad
 item tem `tipo` (um dos quatro acima), `texto` e, quando cabe, `sub`. Acrescentar
 ou remover avisos ajusta o rodízio sozinho.
 
+### A rádio da loja
+
+No canto de baixo à esquerda fica um radinho de madeira, com grade de
+alto-falante, visor âmbar e um cursor de volume. Está sintonizado na
+**Rádio Anos 80** — flashback, new wave, o repertório da época das fitas.
+
+Ele começa **desligado** e não abre conexão nenhuma até você apertar o play: um
+site não pode tocar som sozinho, e mesmo que pudesse, ninguém gosta. Depois
+disso ele lembra o volume e se ficou ligado, e tenta voltar tocando na próxima
+visita — se o navegador barrar, é só apertar de novo.
+
+As dez barrinhas do visor **seguem a música de verdade**, lendo as frequências
+do som que está saindo. Quando o navegador não deixa analisar o áudio, elas
+dançam sozinhas por conta do CSS e a música continua igual.
+
+**A rádio cala sozinha quando um filme começa** e volta a tocar quando você
+fecha o player — mas só se era ela que estava no ar antes. Nunca liga sozinha.
+
+> **Para trocar de emissora:** mexa em **`RADIO`**, no topo de
+> `assets/js/app.js`. Duas exigências para o endereço: precisa ser `https`
+> (o site é https, e o navegador recusa carregar som por `http`) e o servidor
+> precisa mandar o cabeçalho `Access-Control-Allow-Origin`, senão as barrinhas
+> ficam sem sinal — a música toca do mesmo jeito. Deixando a `url` em branco,
+> o rádio some da tela.
+
+⚠️ **O visor não mostra a música tocando.** O servidor da emissora até informa a
+faixa atual, mas não libera essa leitura para outros sites (falta o cabeçalho de
+CORS naquele endereço específico). Como aqui não existe servidor para
+intermediar, não há como contornar — o visor mostra o nome da emissora.
+
 ### Rolando a prateleira
 
 Quando a fileira tem mais fitas do que cabe na tela, aparece um botão redondo em
@@ -402,6 +432,7 @@ para assistir no YouTube, ou procure outra cópia do filme.
 |---|---|
 | Nome do letreiro de neon | Balcão → *A locadora* |
 | Prateleiras e a ordem delas | Balcão → *A locadora → Prateleiras* |
+| Emissora da rádio | `RADIO`, no topo de `assets/js/app.js` |
 | Cores do tema | `assets/css/estilo.css`, bloco `:root` no topo |
 | Tamanho das capas | `assets/css/estilo.css`, variável `--capa-l` |
 | Desligar o efeito CRT | Link no rodapé da vitrine |

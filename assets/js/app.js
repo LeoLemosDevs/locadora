@@ -74,7 +74,15 @@
     player: document.getElementById('player'),
     playerNome: document.getElementById('player-nome'),
     playerTela: document.getElementById('player-tela'),
-    playerExterno: document.getElementById('player-externo')
+    playerExterno: document.getElementById('player-externo'),
+
+    radio: document.getElementById('radio'),
+    radioNome: document.getElementById('radio-nome'),
+    radioEstado: document.getElementById('radio-estado'),
+    radioVu: document.getElementById('radio-vu'),
+    radioLiga: document.getElementById('radio-liga'),
+    radioVolume: document.getElementById('radio-volume'),
+    radioSom: document.getElementById('radio-som')
   };
 
   /* ------------------------------------------------------------ ajudantes */
@@ -203,6 +211,206 @@
       texto: 'Não aceitamos cheque'
     }
   ];
+
+  /* --------------------------------------------------------------- rádio */
+
+  /* A emissora que toca na loja. Para trocar, mexa só neste bloco.
+     Duas exigências para o endereço do stream:
+       1. tem que ser https — o site é https, e o navegador recusa carregar
+          som por http (é o "conteúdo misto");
+       2. o servidor precisa mandar Access-Control-Allow-Origin, senão as
+          barrinhas do visor ficam sem sinal. A música toca do mesmo jeito.
+     Deixe `url` em branco para tirar o rádio do ar. */
+  var RADIO = {
+    nome: 'Rádio Anos 80',
+    url: 'https://live1.livemus.com.br:27400/stream'
+  };
+
+  var radio = {
+    ligada: false,
+    // o filme manda no som: a rádio cala enquanto a fita roda
+    caladaPeloFilme: false,
+    ctx: null,
+    analisador: null,
+    leitura: null,
+    quadro: 0
+  };
+
+  function radioEstado(texto, erro) {
+    el.radioEstado.textContent = texto;
+    el.radio.classList.toggle('radio--erro', !!erro);
+  }
+
+  /* As barrinhas seguem o som de verdade quando o navegador deixa analisar.
+     Se não deixar, a classe --sem-analise entrega a dança para o CSS.
+
+     ATENÇÃO: só chame isto de dentro de um clique. Um AudioContext criado
+     sem gesto do usuário nasce suspenso, e como o áudio passa a sair por
+     ele, o resultado seria a rádio tocando muda. */
+  function ligarAnalise() {
+    if (radio.analisador || radio.ctx) return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    try {
+      radio.ctx = new AC();
+      var fonte = radio.ctx.createMediaElementSource(el.radioSom);
+      radio.analisador = radio.ctx.createAnalyser();
+      radio.analisador.fftSize = 64;
+      radio.analisador.smoothingTimeConstant = 0.75;
+      fonte.connect(radio.analisador);
+      radio.analisador.connect(radio.ctx.destination);
+      radio.leitura = new Uint8Array(radio.analisador.frequencyBinCount);
+      el.radio.classList.remove('radio--sem-analise');
+    } catch (e) {
+      // o som continua saindo pelo próprio <audio>; só o visor fica no CSS
+      radio.analisador = null;
+      el.radio.classList.add('radio--sem-analise');
+    }
+  }
+
+  /* O navegador suspende o contexto quando a aba fica em segundo plano.
+     Sem isto, a rádio voltaria muda ao retomar. */
+  function retomarContexto() {
+    if (radio.ctx && radio.ctx.state === 'suspended' && radio.ctx.resume) {
+      radio.ctx.resume().catch(function () { /* segue sem análise */ });
+    }
+  }
+
+  function animarVu() {
+    radio.quadro = 0;
+    if (!radio.ligada || !radio.analisador) return;
+
+    radio.analisador.getByteFrequencyData(radio.leitura);
+    var barras = el.radioVu.children;
+    var passo = Math.max(1, Math.floor(radio.leitura.length / barras.length));
+
+    for (var i = 0; i < barras.length; i++) {
+      var soma = 0;
+      for (var j = 0; j < passo; j++) soma += radio.leitura[i * passo + j] || 0;
+      var nivel = (soma / passo) / 255;
+      barras[i].style.height = Math.max(10, Math.min(100, nivel * 135)) + '%';
+    }
+    radio.quadro = requestAnimationFrame(animarVu);
+  }
+
+  function pararVu() {
+    if (radio.quadro) cancelAnimationFrame(radio.quadro);
+    radio.quadro = 0;
+    var barras = el.radioVu.children;
+    for (var i = 0; i < barras.length; i++) barras[i].style.height = '';
+  }
+
+  function tocarRadio(porVontade) {
+    if (!RADIO.url) return;
+
+    // o endereço só entra agora: com preload="none" e src vazio, o navegador
+    // não abre conexão nenhuma até alguém apertar o play
+    if (!el.radioSom.src) el.radioSom.src = RADIO.url;
+
+    retomarContexto();
+    radioEstado('sintonizando…');
+    var p = el.radioSom.play();
+
+    if (p && p.catch) {
+      p.catch(function () {
+        // o navegador barra som automático até o primeiro clique na página
+        radio.ligada = false;
+        pintarRadio();
+        radioEstado(porVontade ? 'não consegui tocar' : 'desligada', porVontade);
+      });
+    }
+  }
+
+  function pararRadio() {
+    el.radioSom.pause();
+    // solta o stream: pausado, ele continuaria baixando de graça
+    el.radioSom.removeAttribute('src');
+    el.radioSom.load();
+    pararVu();
+  }
+
+  function pintarRadio() {
+    el.radio.classList.toggle('radio--tocando', radio.ligada);
+    el.radioLiga.setAttribute('aria-pressed', radio.ligada ? 'true' : 'false');
+    el.radioLiga.setAttribute('aria-label', radio.ligada ? 'Desligar a rádio' : 'Ligar a rádio');
+    el.radioLiga.firstElementChild.textContent = radio.ligada ? '❚❚' : '▶';
+  }
+
+  function alternarRadio(ligar) {
+    radio.ligada = ligar;
+    pintarRadio();
+    if (ligar) { ligarAnalise(); tocarRadio(true); }
+    else { pararRadio(); radioEstado('desligada'); }
+    L.salvarRadio(null, ligar);
+  }
+
+  /* Enquanto a fita roda, a rádio cala — e volta sozinha quando o filme
+     acaba, mas só se era ela que estava tocando antes. */
+  function calarRadioPeloFilme() {
+    if (!radio.ligada) return;
+    radio.caladaPeloFilme = true;
+    radio.ligada = false;
+    pintarRadio();
+    pararRadio();
+    radioEstado('em pausa: filme tocando');
+  }
+
+  function voltarRadioDepoisDoFilme() {
+    if (!radio.caladaPeloFilme) return;
+    radio.caladaPeloFilme = false;
+    radio.ligada = true;
+    pintarRadio();
+    tocarRadio(false);
+  }
+
+  function iniciarRadio() {
+    if (!RADIO.url) return;
+
+    el.radio.hidden = false;
+    el.radioNome.textContent = RADIO.nome;
+    radioEstado('desligada');
+
+    // até um clique criar o analisador, quem dança as barrinhas é o CSS
+    el.radio.classList.add('radio--sem-analise');
+
+    var vol = prefs.radioVolume;
+    el.radioSom.volume = vol;
+    el.radioVolume.value = Math.round(vol * 100);
+
+    el.radioLiga.addEventListener('click', function () {
+      alternarRadio(!radio.ligada);
+    });
+
+    el.radioVolume.addEventListener('input', function () {
+      var v = Number(el.radioVolume.value) / 100;
+      el.radioSom.volume = v;
+      L.salvarRadio(v, null);
+    });
+
+    el.radioSom.addEventListener('playing', function () {
+      radioEstado('no ar');
+      if (radio.analisador) animarVu();
+    });
+    el.radioSom.addEventListener('waiting', function () { radioEstado('sintonizando…'); });
+    el.radioSom.addEventListener('error', function () {
+      if (!radio.ligada) return;
+      radio.ligada = false;
+      pintarRadio();
+      pararVu();
+      radioEstado('emissora fora do ar', true);
+    });
+
+    // Se ficou ligada da última visita, tenta voltar tocando. O navegador
+    // costuma barrar até o primeiro clique — aí ela só fica em silêncio.
+    // Aqui não há clique, então o analisador não entra: ver ligarAnalise().
+    if (prefs.radioLigada) {
+      radio.ligada = true;
+      pintarRadio();
+      tocarRadio(false);
+    }
+  }
+
+  /* -------------------------------------------------------------- avisos */
 
   function avisoHTML(a) {
     if (a.tipo === 'led') {
@@ -762,6 +970,7 @@
     if (rep.tipo === 'nenhum') return;
 
     soltarControle();
+    calarRadioPeloFilme();
     el.player.dataset.id = filme.id;
     el.playerNome.textContent = filme.titulo;
     el.playerExterno.href = rep.externo || '#';
@@ -885,6 +1094,7 @@
     }
     soltarControle();
     el.playerTela.innerHTML = '';   // derruba o iframe para parar o som
+    voltarRadioDepoisDoFilme();
     prefs = L.lerPrefs();
     desenhar();
   }
@@ -1256,6 +1466,9 @@
   });
 
   document.getElementById('bt-crt').addEventListener('click', function () {
+    // relê antes de gravar: o volume da rádio pode ter mudado no disco
+    // depois que este `prefs` foi carregado, e salvá-lo cru o desfaria
+    prefs = L.lerPrefs();
     prefs.crt = !prefs.crt;
     L.salvarPrefs(prefs);
     document.body.classList.toggle('sem-crt', !prefs.crt);
@@ -1295,5 +1508,6 @@
 
     desenhar();
     mostrarCobranca();
+    iniciarRadio();
   })();
 })();

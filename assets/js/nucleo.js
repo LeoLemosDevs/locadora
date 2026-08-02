@@ -406,12 +406,17 @@ window.LOCADORA = (function () {
         locacaoEm: p.locacaoEm || null,
         // por fita: { rebobinada: bool, multada: bool }
         fitas: p.fitas && typeof p.fitas === 'object' ? p.fitas : {},
-        multaRebobinar: Number(p.multaRebobinar) || 0
+        multaRebobinar: Number(p.multaRebobinar) || 0,
+        // a rádio da loja: volume de 0 a 1 e se ficou ligada da última vez
+        radioVolume: typeof p.radioVolume === 'number'
+          ? Math.min(1, Math.max(0, p.radioVolume)) : 0.65,
+        radioLigada: !!p.radioLigada
       };
     } catch (e) {
       return {
         lista: [], historico: [], progresso: {}, crt: true,
-        locacaoEm: null, fitas: {}, multaRebobinar: 0
+        locacaoEm: null, fitas: {}, multaRebobinar: 0,
+        radioVolume: 0.65, radioLigada: false
       };
     }
   }
@@ -448,6 +453,14 @@ window.LOCADORA = (function () {
     var p = lerPrefs();
     p.fitas[filmeId] = p.fitas[filmeId] || {};
     p.fitas[filmeId].rebobinada = false;
+    salvarPrefs(p);
+  }
+
+  /** Guarda como a rádio ficou, para voltar assim na próxima visita. */
+  function salvarRadio(volume, ligada) {
+    var p = lerPrefs();
+    if (volume != null) p.radioVolume = Math.min(1, Math.max(0, Number(volume) || 0));
+    if (ligada != null) p.radioLigada = !!ligada;
     salvarPrefs(p);
   }
 
@@ -708,6 +721,7 @@ window.LOCADORA = (function () {
 
     lerPrefs: lerPrefs,
     salvarPrefs: salvarPrefs,
+    salvarRadio: salvarRadio,
     alternarLista: alternarLista,
     registrarVisto: registrarVisto,
     salvarProgresso: salvarProgresso,

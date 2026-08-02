@@ -2090,6 +2090,184 @@ dialog::backdrop {
 .tranca p { color: var(--cinza); font-size: 15px; margin: 0 0 20px; }
 .tranca input { width: 100%; text-align: center; letter-spacing: .3em; margin-bottom: 12px; }
 
+/* =============================================== o radinho de prateleira
+   Um rádio de madeira no canto de baixo, com grade de alto-falante, visor
+   âmbar e as barrinhas de VU. Toca enquanto o freguês escolhe a fita e cala
+   sozinho quando um filme começa.
+   ======================================================================== */
+
+.radio {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 40;
+  display: flex;
+  width: 274px;
+  padding: 9px;
+  border-radius: 7px;
+  border: 1px solid #14100c;
+  background: linear-gradient(180deg, #6a4126, #4a2c17 55%, #34200f);
+  box-shadow: var(--sombra-forte), inset 0 1px 0 rgba(255, 255, 255, .15);
+  font-family: var(--fonte-texto);
+}
+
+/* a grade do alto-falante, furinho por furinho */
+.radio__grade {
+  width: 58px;
+  flex: none;
+  border-radius: 4px;
+  border: 1px solid #241a12;
+  background:
+    radial-gradient(circle, #0c0907 1.1px, transparent 1.5px) 0 0 / 5px 5px,
+    linear-gradient(180deg, #2c2118, #16100a);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, .85);
+}
+
+.radio__painel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-left: 9px;
+}
+
+.radio__visor {
+  padding: 6px 8px 4px;
+  border-radius: 3px;
+  background: #100b06;
+  border: 1px solid #2b1e12;
+  box-shadow: inset 0 2px 9px rgba(0, 0, 0, .9);
+}
+
+.radio__nome {
+  display: block;
+  font-family: var(--fonte-mono);
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: .08em;
+  color: var(--ambar);
+  text-shadow: 0 0 9px rgba(255, 179, 64, .5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.radio__estado {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #7d6242;
+}
+.radio--erro .radio__estado { color: #e2607e; }
+
+/* as barrinhas. A altura vem do JS quando o navegador deixa analisar o som;
+   sem isso elas dançam sozinhas pela animação abaixo. */
+.radio__vu {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 13px;
+  margin: 4px 0 3px;
+}
+.radio__vu i {
+  flex: 1;
+  height: 10%;
+  border-radius: 1px;
+  background: linear-gradient(180deg, var(--neon-ciano), #17727a);
+  opacity: .28;
+  transition: height .08s linear;
+}
+.radio--tocando .radio__vu i { opacity: 1; }
+
+.radio--tocando.radio--sem-analise .radio__vu i {
+  animation: vuSolto 1s ease-in-out infinite;
+  transition: none;
+}
+.radio--tocando.radio--sem-analise .radio__vu i:nth-child(2n)   { animation-duration: .74s; }
+.radio--tocando.radio--sem-analise .radio__vu i:nth-child(3n)   { animation-duration: 1.3s; }
+.radio--tocando.radio--sem-analise .radio__vu i:nth-child(4n+1) { animation-duration: .92s; }
+.radio--tocando.radio--sem-analise .radio__vu i:nth-child(5n)   { animation-duration: 1.12s; }
+@keyframes vuSolto {
+  0%, 100% { height: 14%; }
+  50%      { height: 86%; }
+}
+
+.radio__botoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radio__liga {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid #1b1310;
+  background: linear-gradient(180deg, #3d2e21, #241a12);
+  color: var(--creme);
+  font-size: 12px;
+  font-style: normal;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 0 #170f0a, inset 0 1px 0 rgba(255, 255, 255, .17);
+  transition: color .2s, box-shadow .12s, transform .12s;
+}
+.radio__liga:hover { color: #fff; }
+.radio__liga:active { transform: translateY(2px); box-shadow: 0 1px 0 #170f0a; }
+.radio--tocando .radio__liga {
+  color: var(--neon-ciano);
+  text-shadow: 0 0 10px rgba(53, 229, 242, .85);
+}
+
+/* o cursor de volume, no estilo de um potenciômetro deslizante */
+.radio__vol {
+  flex: 1;
+  min-width: 0;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.radio__vol::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #8a6a3c, #2a1d12);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .8);
+}
+.radio__vol::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #8a6a3c, #2a1d12);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .8);
+}
+.radio__vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 11px;
+  height: 17px;
+  margin-top: -6.5px;
+  border-radius: 2px;
+  border: 1px solid #16100b;
+  background: linear-gradient(180deg, #f0e2c6, #a08a63);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .7);
+}
+.radio__vol::-moz-range-thumb {
+  width: 11px;
+  height: 17px;
+  border-radius: 2px;
+  border: 1px solid #16100b;
+  background: linear-gradient(180deg, #f0e2c6, #a08a63);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .7);
+}
+.radio__vol:focus-visible { outline: 2px solid var(--ambar); outline-offset: 3px; }
+
 /* ------------------------------------------------------------ responsivo */
 
 @media (max-width: 720px) {
@@ -2101,6 +2279,12 @@ dialog::backdrop {
   .item { grid-template-columns: 44px 1fr; }
   .item__capa { width: 44px; }
   .item__bts { grid-column: 1 / -1; justify-content: flex-end; }
+
+  /* no celular o rádio encolhe e perde a grade, senão come metade da tela */
+  .radio { left: 10px; bottom: 10px; width: 190px; padding: 7px; }
+  .radio__grade { display: none; }
+  .radio__painel { padding-left: 0; }
+  .radio__nome { font-size: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2118,10 +2302,13 @@ dialog::backdrop {
   }
   .aviso-loja--neon b { animation: none !important; }
   .marca__neon { animation: none !important; }
+
+  /* as barrinhas do VU param de dançar e ficam num nível fixo */
+  .radio--tocando .radio__vu i { animation: none !important; height: 42% !important; }
 }
 
 /* impressão: a lista do acervo em papel */
 @media print {
-  .crt, .topo, .trilho__seta, .rodape { display: none !important; }
+  .crt, .topo, .trilho__seta, .rodape, .radio { display: none !important; }
   body { background: #fff; color: #000; }
 }
