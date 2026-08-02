@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balcão — Locadora</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0810">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230a0810'/%3E%3Crect x='3' y='8' width='26' height='16' rx='2' fill='%23231f2c' stroke='%23ffb340'/%3E%3Ccircle cx='11' cy='16' r='3.4' fill='%23ffb340'/%3E%3Ccircle cx='21' cy='16' r='3.4' fill='%23ffb340'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/estilo.css">
+</head>
+<body>
+
+<div class="crt" aria-hidden="true"></div>
+
+<!-- ------------------------------------------------------------- tranca -->
+<section class="tranca" id="tranca" hidden>
+  <h2>Balcão fechado</h2>
+  <p id="tranca-texto">Digite a senha do dono para entrar.</p>
+  <form id="tranca-form">
+    <input type="password" id="tranca-senha" class="campo" placeholder="••••••" autocomplete="current-password" required>
+    <button type="submit" class="bt bt--principal" style="width:100%;justify-content:center">Abrir</button>
+  </form>
+  <p class="aviso aviso--erro" id="tranca-erro" hidden style="margin-top:14px">Senha errada.</p>
+  <p style="margin-top:18px"><a href="index.html">← voltar para a vitrine</a></p>
+</section>
+
+<!-- -------------------------------------------------------------- balcão -->
+<div id="area" hidden>
+
+<header class="topo">
+  <div class="topo__interno">
+    <a class="marca" href="index.html">
+      <span class="marca__neon">BALCÃO</span>
+      <span class="marca__sub">administração do acervo</span>
+    </a>
+    <div style="flex:1"></div>
+    <nav class="menu">
+      <a href="index.html">← Ver a vitrine</a>
+      <button type="button" id="bt-sair" class="menu__admin">Trancar</button>
+    </nav>
+  </div>
+  <div class="fita-luz"></div>
+</header>
+
+<main class="balcao">
+
+  <div class="aviso aviso--ok"   id="msg-ok" hidden></div>
+  <div class="aviso aviso--erro" id="msg-erro" hidden></div>
+
+  <!-- ---------------------------------------------------- estado / publicar -->
+  <section class="painel">
+    <div class="painel__cabeca">
+      <div>
+        <h2>Publicação</h2>
+        <p id="estado-linha">Carregando…</p>
+      </div>
+      <div class="item__bts">
+        <button type="button" class="bt bt--pequeno" id="bt-baixar">⬇ Baixar catalogo.json</button>
+        <button type="button" class="bt bt--pequeno bt--principal" id="bt-publicar">↥ Publicar no GitHub</button>
+      </div>
+    </div>
+    <div class="painel__dentro">
+      <div class="aviso aviso--dica">
+        As alterações valem na hora <strong>neste navegador</strong>. Para que apareçam
+        em qualquer aparelho, publique no GitHub (ou baixe o <code>catalogo.json</code>
+        e substitua o arquivo no repositório).
+      </div>
+
+      <details id="cfg-github">
+        <summary style="cursor:pointer;margin-bottom:14px">Configurar conexão com o GitHub</summary>
+        <div class="grade">
+          <div class="campo">
+            <label for="gh-usuario">Usuário / organização</label>
+            <input type="text" id="gh-usuario" placeholder="seu-usuario" autocomplete="off">
+          </div>
+          <div class="campo">
+            <label for="gh-repo">Repositório</label>
+            <input type="text" id="gh-repo" placeholder="locadora" autocomplete="off">
+          </div>
+          <div class="campo">
+            <label for="gh-branch">Branch</label>
+            <input type="text" id="gh-branch" placeholder="main" autocomplete="off">
+          </div>
+          <div class="campo">
+            <label for="gh-caminho">Caminho do arquivo</label>
+            <input type="text" id="gh-caminho" placeholder="dados/catalogo.json" autocomplete="off">
+          </div>
+          <div class="campo col-inteira">
+            <label for="gh-token">Token de acesso (fine-grained, permissão <em>Contents: Read and write</em>)</label>
+            <input type="password" id="gh-token" placeholder="github_pat_…" autocomplete="off">
+            <small>
+              Fica guardado só neste navegador (localStorage) e nunca entra no repositório.
+              Gere em <a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener">Settings → Developer settings → Tokens</a>.
+            </small>
+          </div>
+        </div>
+        <div class="acoes-form">
+          <button type="button" class="bt bt--pequeno" id="bt-salvar-gh">Salvar conexão</button>
+          <button type="button" class="bt bt--pequeno bt--perigo" id="bt-esquecer-gh">Esquecer token</button>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- cadastro -->
+  <section class="painel">
+    <div class="painel__cabeca">
+      <div>
+        <h2 id="form-titulo">Cadastrar fita</h2>
+        <p>Cole o link do YouTube, Google Drive, TeraBox ou de um arquivo .mp4.</p>
+      </div>
+    </div>
+    <div class="painel__dentro">
+      <form id="form-filme">
+        <div class="grade grade--2">
+
+          <div class="campo col-inteira">
+            <label for="f-url">Link do vídeo</label>
+            <input type="url" id="f-url" placeholder="https://www.youtube.com/watch?v=…" autocomplete="off">
+            <small id="f-url-dica">A origem é identificada sozinha.</small>
+          </div>
+
+          <div class="campo">
+            <label for="f-fonte">Origem</label>
+            <select id="f-fonte">
+              <option value="">— detectar sozinho (recomendado) —</option>
+              <option value="arquivo">Forçar player nativo (.mp4)</option>
+              <option value="link">Forçar abrir em nova aba</option>
+            </select>
+            <small>Só mexa aqui se a detecção automática errar.</small>
+          </div>
+
+          <div class="campo">
+            <label for="f-titulo">Título *</label>
+            <input type="text" id="f-titulo" required autocomplete="off">
+          </div>
+
+          <div class="campo">
+            <label for="f-original">Título original</label>
+            <input type="text" id="f-original" autocomplete="off">
+          </div>
+
+          <div class="campo">
+            <label for="f-ano">Ano</label>
+            <input type="number" id="f-ano" min="1888" max="2100" placeholder="1985">
+          </div>
+
+          <div class="campo">
+            <label for="f-duracao">Duração (minutos)</label>
+            <input type="number" id="f-duracao" min="1" max="900" placeholder="116">
+          </div>
+
+          <div class="campo">
+            <label for="f-classificacao">Classificação</label>
+            <input type="text" id="f-classificacao" placeholder="L, 10, 12, 14, 16, 18">
+          </div>
+
+          <div class="campo">
+            <label for="f-nota">Nota (0 a 10)</label>
+            <input type="number" id="f-nota" min="0" max="10" step="0.1" placeholder="8.5">
+          </div>
+
+          <div class="campo">
+            <label for="f-faixa">Classe da fita</label>
+            <select id="f-faixa">
+              <option value="">— sem classe —</option>
+            </select>
+            <small>A faixa de preço da locadora antiga. Vira um selo na capa e ganha prateleira própria.</small>
+          </div>
+
+          <div class="campo col-inteira">
+            <label>Gêneros / prateleiras</label>
+            <div class="generos" id="f-generos"></div>
+            <small>Marque quantos quiser — o filme aparece em todas as prateleiras marcadas.</small>
+          </div>
+
+          <div class="campo col-inteira">
+            <label for="f-sinopse">Sinopse</label>
+            <textarea id="f-sinopse" placeholder="Do que se trata o filme…"></textarea>
+          </div>
+
+          <div class="campo col-inteira">
+            <div class="previa">
+              <div class="previa__capa" id="f-previa">sem capa</div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:14px">
+                <div class="campo">
+                  <label for="f-capa">Capa (URL da imagem, formato retrato)</label>
+                  <input type="url" id="f-capa" placeholder="https://…/capa.jpg" autocomplete="off">
+                  <small>Deixe em branco para usar a miniatura do YouTube automaticamente.</small>
+                </div>
+                <div class="campo">
+                  <label for="f-fundo">Arte de fundo (URL, formato paisagem — opcional)</label>
+                  <input type="url" id="f-fundo" placeholder="https://…/fundo.jpg" autocomplete="off">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="campo col-inteira">
+            <label class="linha-check">
+              <input type="checkbox" id="f-destaque">
+              Candidato ao destaque da semana (aparece no banner da vitrine)
+            </label>
+          </div>
+
+        </div>
+
+        <div class="acoes-form">
+          <button type="submit" class="bt bt--principal" id="bt-salvar">Salvar fita</button>
+          <button type="button" class="bt" id="bt-limpar">Limpar formulário</button>
+          <button type="button" class="bt bt--perigo" id="bt-cancelar" hidden>Cancelar edição</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ----------------------------------------------------------- acervo -->
+  <section class="painel">
+    <div class="painel__cabeca">
+      <div>
+        <h2>Acervo</h2>
+        <p id="acervo-contagem">—</p>
+      </div>
+      <div class="campo" style="min-width:230px">
+        <input type="text" id="acervo-busca" placeholder="Filtrar por título ou gênero…" autocomplete="off">
+      </div>
+    </div>
+    <div class="painel__dentro">
+      <div class="acervo" id="acervo-lista"></div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------ configuração -->
+  <section class="painel">
+    <div class="painel__cabeca">
+      <div>
+        <h2>A locadora</h2>
+        <p>Nome, assinatura e as prateleiras disponíveis.</p>
+      </div>
+    </div>
+    <div class="painel__dentro">
+      <div class="grade grade--2">
+        <div class="campo">
+          <label for="c-nome">Nome (letreiro de neon)</label>
+          <input type="text" id="c-nome" placeholder="LOCADORA">
+        </div>
+        <div class="campo">
+          <label for="c-assinatura">Assinatura (linha de baixo)</label>
+          <input type="text" id="c-assinatura" placeholder="vídeo clube particular">
+        </div>
+        <div class="campo col-inteira">
+          <label for="c-categorias">Prateleiras — uma por linha, na ordem em que aparecem</label>
+          <textarea id="c-categorias" rows="9" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="acoes-form">
+        <button type="button" class="bt bt--principal" id="bt-salvar-config">Salvar ajustes</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- backup -->
+  <section class="painel">
+    <div class="painel__cabeca">
+      <div>
+        <h2>Cópia de segurança</h2>
+        <p>Importar, exportar e recomeçar.</p>
+      </div>
+    </div>
+    <div class="painel__dentro">
+      <div class="acoes-form" style="margin-top:0;padding-top:0;border:0">
+        <button type="button" class="bt" id="bt-exportar">⬇ Exportar backup</button>
+        <button type="button" class="bt" id="bt-importar">⬆ Importar backup</button>
+        <input type="file" id="arquivo-importar" accept="application/json,.json" hidden>
+        <button type="button" class="bt" id="bt-senha">Trocar senha do balcão</button>
+        <button type="button" class="bt bt--perigo" id="bt-descartar">Descartar alterações locais</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</div>
+
+<script src="assets/js/nucleo.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

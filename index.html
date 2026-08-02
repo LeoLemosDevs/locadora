@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Locadora — Vídeo Clube Particular</title>
+<meta name="description" content="Meu acervo particular de filmes.">
+<meta name="theme-color" content="#0a0810">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230a0810'/%3E%3Crect x='3' y='8' width='26' height='16' rx='2' fill='%23231f2c' stroke='%23ff2f87'/%3E%3Ccircle cx='11' cy='16' r='3.4' fill='%2335e5f2'/%3E%3Ccircle cx='21' cy='16' r='3.4' fill='%2335e5f2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Permanent+Marker&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/estilo.css">
+</head>
+<body>
+
+<div class="crt" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="topo__interno">
+    <a class="marca" href="index.html">
+      <span class="marca__neon" id="marca-nome">LOCADORA</span>
+      <span class="marca__sub" id="marca-sub">vídeo clube particular</span>
+    </a>
+
+    <div class="busca">
+      <input id="busca" type="search" placeholder="Procurar na prateleira…" autocomplete="off" aria-label="Procurar filme">
+    </div>
+
+    <nav class="menu">
+      <button type="button" data-aba="acervo" class="ativo">Acervo</button>
+      <button type="button" data-aba="lista">Filmes alugados</button>
+      <a href="admin.html" class="menu__admin" title="Painel de administração">Balcão</a>
+    </nav>
+  </div>
+  <div class="fita-luz"></div>
+</header>
+
+<main>
+  <!-- destaque da semana -->
+  <section class="vitrine" id="vitrine" hidden>
+    <div class="vitrine__veu"></div>
+    <div class="vitrine__texto">
+      <span class="vitrine__etiqueta">Destaque da semana</span>
+      <h2 id="vitrine-titulo"></h2>
+      <div class="vitrine__meta" id="vitrine-meta"></div>
+      <p class="vitrine__sinopse" id="vitrine-sinopse"></p>
+      <div class="vitrine__acoes">
+        <button type="button" class="bt bt--principal" id="vitrine-assistir">▶ Assistir</button>
+        <button type="button" class="bt bt--fantasma" id="vitrine-ficha">Mais informações</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- os cartazes logo abaixo do banner, como na entrada da loja -->
+  <div id="avisos-topo"></div>
+
+
+  <!-- o balcão de devolução: só na aba "filmes alugados" -->
+  <section class="devolucao" id="devolucao" hidden>
+
+    <!-- a bancada de rebobinar, quando há fita pendente -->
+    <div class="estacao" id="estacao" hidden>
+      <h2 class="estacao__titulo">Rebobine antes de devolver</h2>
+      <p class="estacao__texto" id="estacao-texto"></p>
+
+      <div class="movel">
+        <!-- a fita em cima do aparelho -->
+        <div class="vhs" id="vhs">
+          <div class="vhs__etiqueta">
+            <small>VHS · E-180</small>
+            <span id="vhs-nome">—</span>
+          </div>
+          <div class="vhs__janela">
+            <i class="vhs__carretel"></i>
+            <i class="vhs__tape"></i>
+            <i class="vhs__carretel"></i>
+          </div>
+          <div class="vhs__selo" id="vhs-selo">não rebobinada</div>
+        </div>
+
+        <!-- o videocassete -->
+        <div class="aparelho">
+          <div class="aparelho__topo">
+            <span class="aparelho__marca">LOCADORA VCR-2000</span>
+            <span class="aparelho__visor">
+              <b id="visor-estado">STOP</b>
+              <b id="visor-tempo">0:00:00</b>
+            </span>
+          </div>
+          <div class="aparelho__slot"><span>INSERT TAPE</span></div>
+          <div class="aparelho__botoes">
+            <button type="button" data-maq="rebobinar"><i>◀◀</i><span>Rebobinar</span></button>
+            <button type="button" data-maq="voltar"><i>◀</i><span>Voltar</span></button>
+            <button type="button" data-maq="play"><i>▶</i><span>Play</span></button>
+            <button type="button" data-maq="pause"><i>❚❚</i><span>Pause</span></button>
+            <button type="button" data-maq="stop"><i>■</i><span>Stop</span></button>
+            <button type="button" data-maq="avancar"><i>▶▶</i><span>Avançar</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- o caixa -->
+    <div class="caixa" id="caixa">
+      <div class="caixa__conta" id="caixa-conta"></div>
+      <button type="button" class="bt bt--dinheiro" id="bt-pagar">
+        <span class="bt__cifrao">$</span>
+        <span>Pagar e entregar</span>
+        <span class="bt__valor" id="bt-valor"></span>
+      </button>
+      <p class="caixa__nota" id="caixa-nota"></p>
+    </div>
+
+  </section>
+
+  <div id="prateleiras"></div>
+
+  <div class="vazio" id="vazio" hidden>
+    <div class="vazio__icone" aria-hidden="true">📼</div>
+    <h2 id="vazio-titulo">Prateleira vazia</h2>
+    <p id="vazio-texto">Ainda não há fitas no acervo. Vá até o balcão e cadastre o primeiro filme.</p>
+    <a class="bt bt--principal" id="vazio-bt" href="admin.html">Ir para o balcão</a>
+  </div>
+</main>
+
+<footer class="rodape">
+  <p>
+    Por favor, devolva a fita rebobinada. ·
+    <span id="contagem">—</span> ·
+    <button type="button" id="bt-crt">alternar efeito CRT</button>
+  </p>
+</footer>
+
+<!-- a cobrança que aparece ao entrar no site com fita em casa -->
+<div class="cobranca" id="cobranca" hidden role="alert">
+  <div class="cobranca__selo">Locadora</div>
+  <strong id="cobranca-titulo">Você está com fitas em casa</strong>
+  <p id="cobranca-texto"></p>
+  <div class="cobranca__acoes">
+    <button type="button" class="bt bt--pequeno bt--dinheiro" id="cobranca-ir">Ir ao balcão</button>
+    <button type="button" class="bt bt--pequeno bt--fantasma" id="cobranca-depois">Depois</button>
+  </div>
+</div>
+
+<!-- o recibo pendurado na lateral, visível enquanto se escolhe as fitas -->
+<aside class="recibo" id="recibo" hidden>
+  <button type="button" class="recibo__aba" id="recibo-aba" aria-expanded="false">
+    <span class="recibo__aba-texto" id="recibo-resumo">conta</span>
+  </button>
+  <div class="recibo__papel" id="recibo-papel"></div>
+</aside>
+
+<!-- ficha do filme -->
+<dialog id="ficha" aria-labelledby="ficha-titulo">
+  <div class="ficha__corpo">
+    <div class="ficha__arte" id="ficha-arte">
+      <button type="button" class="ficha__fechar" data-fechar="ficha" aria-label="Fechar">✕</button>
+    </div>
+    <div class="ficha__dentro">
+      <h2 id="ficha-titulo"></h2>
+      <div class="ficha__meta" id="ficha-meta"></div>
+      <p class="ficha__sinopse" id="ficha-sinopse"></p>
+      <div class="ficha__acoes">
+        <button type="button" class="bt bt--principal" id="ficha-assistir">▶ Assistir</button>
+        <button type="button" class="bt" id="ficha-lista">+ Alugar fita</button>
+        <a class="bt bt--fantasma" id="ficha-externo" target="_blank" rel="noopener">Abrir na origem ↗</a>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- player -->
+<dialog id="player" aria-labelledby="player-nome">
+  <div class="player__corpo">
+    <div class="player__barra">
+      <span class="player__nome" id="player-nome"></span>
+      <a class="bt bt--pequeno bt--fantasma" id="player-externo" target="_blank" rel="noopener">Abrir fora ↗</a>
+      <button type="button" class="bt bt--pequeno" data-fechar="player">✕ Fechar</button>
+    </div>
+    <div class="player__tela" id="player-tela"></div>
+
+    <!-- o videocassete embaixo da TV -->
+    <div class="videocassete" id="vcr">
+      <div class="videocassete__visor">
+        <span class="videocassete__estado" id="vcr-estado">STOP</span>
+        <span class="videocassete__contador" id="vcr-contador">0:00:00</span>
+      </div>
+      <div class="videocassete__botoes">
+        <button type="button" data-vcr="rebobinar"><i>◀◀</i><span>Rebobinar</span></button>
+        <button type="button" data-vcr="voltar"><i>◀</i><span>Voltar</span></button>
+        <button type="button" data-vcr="play"><i>▶</i><span>Play</span></button>
+        <button type="button" data-vcr="pause"><i>❚❚</i><span>Pause</span></button>
+        <button type="button" data-vcr="avancar"><i>▶▶</i><span>Avançar</span></button>
+      </div>
+      <p class="videocassete__nota" id="vcr-nota" hidden></p>
+    </div>
+  </div>
+
+  <!-- A cobrança por não rebobinar. Fica DENTRO do diálogo porque o
+       <dialog> modal sobe para a camada de topo: solta aqui fora, ela
+       ficaria escondida atrás do fundo escuro. -->
+  <div class="multa" id="multa" hidden role="alert">
+    <div class="multa__selo">Aviso</div>
+    <strong>Multa por não rebobinar</strong>
+    <p id="multa-texto"></p>
+    <button type="button" class="bt bt--pequeno" id="multa-ok">Está bem, eu pago</button>
+  </div>
+</dialog>
+
+<script src="assets/js/nucleo.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

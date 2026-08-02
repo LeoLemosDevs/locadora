@@ -1,0 +1,22 @@
+{
+  "versao": 1,
+  "nomeLocadora": "Locadora",
+  "assinatura": "vídeo clube particular",
+  "atualizadoEm": "2026-08-01T00:00:00.000Z",
+  "categorias": [
+    "Ação",
+    "Aventura",
+    "Artes Marciais",
+    "Clássicos",
+    "Animes",
+    "Faroeste",
+    "Comédia",
+    "Terror",
+    "Ficção Científica",
+    "Drama",
+    "Suspense",
+    "Documentário",
+    "Infantil"
+  ],
+  "filmes": []
+}

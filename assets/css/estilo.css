@@ -1,0 +1,2124 @@
+/* =========================================================================
+   LOCADORA — folha de estilo única (vitrine + balcão)
+   Estética: vídeo clube de bairro, fita VHS, neon, carpete e prateleira.
+   ========================================================================= */
+
+:root {
+  /* tintas */
+  --tinta:        #0a0810;
+  --tinta-2:      #120e1c;
+  --tinta-3:      #1b1528;
+  --borda:        #2b2340;
+
+  /* madeira da prateleira */
+  --madeira:      #4a2c17;
+  --madeira-alta: #7a4a26;
+  --madeira-baixa:#2a170c;
+
+  /* neon */
+  --neon-rosa:    #ff2f87;
+  --neon-ciano:   #35e5f2;
+  --ambar:        #ffb340;
+
+  /* texto */
+  --creme:        #f6ecd8;
+  --cinza:        #a096b4;
+  --cinza-fraco:  #6d6484;
+
+  /* medidas */
+  --raio:         6px;
+  --topo-h:       92px;
+  --capa-l:       clamp(132px, 15vw, 186px);
+  --sombra-forte: 0 18px 40px rgba(0, 0, 0, .65);
+
+  --fonte-titulo: 'Bebas Neue', 'Arial Narrow', Impact, sans-serif;
+  --fonte-texto:  'Barlow Condensed', 'Segoe UI', system-ui, sans-serif;
+  --fonte-mono:   'VT323', ui-monospace, 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+
+/* O atributo hidden tem que vencer qualquer display vindo de classe
+   (.vitrine é flex, .bt é inline-flex...). Sem isto, tudo que o JS
+   esconde com elemento.hidden = true continua aparecendo. */
+[hidden] { display: none !important; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--fonte-texto);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--creme);
+  background-color: var(--tinta);
+  /* carpete de locadora: manchas de cor + granulado */
+  background-image:
+    radial-gradient(1100px 620px at 12% -10%, rgba(255, 47, 135, .16), transparent 62%),
+    radial-gradient(900px 560px at 88% 4%,   rgba(53, 229, 242, .12), transparent 60%),
+    radial-gradient(760px 500px at 50% 106%, rgba(255, 179, 64, .09), transparent 64%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* granulado sutil por cima do fundo */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23r)' opacity='.16'/%3E%3C/svg%3E");
+}
+
+img { max-width: 100%; display: block; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+button { cursor: pointer; }
+
+a { color: var(--neon-ciano); }
+
+::selection { background: var(--neon-rosa); color: #fff; }
+
+/* rolagem estilizada */
+* { scrollbar-width: thin; scrollbar-color: var(--borda) transparent; }
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--borda); border-radius: 99px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------------------------------------------------------- CRT / varredura */
+
+.crt {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, .22) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+  opacity: .55;
+}
+.crt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* vinheta de tubo */
+  background: radial-gradient(120% 100% at 50% 50%, transparent 58%, rgba(0, 0, 0, .55) 100%);
+}
+body.sem-crt .crt { display: none; }
+
+/* ------------------------------------------------------------------- topo */
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: linear-gradient(180deg, rgba(10, 8, 16, .97) 0%, rgba(10, 8, 16, .88) 70%, transparent 100%);
+  backdrop-filter: blur(10px);
+}
+
+.topo__interno {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 14px clamp(16px, 4vw, 52px);
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 34px);
+  flex-wrap: wrap;
+}
+
+.marca { text-decoration: none; display: block; line-height: 1; flex-shrink: 0; }
+
+.marca__neon {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(30px, 4.4vw, 46px);
+  letter-spacing: .09em;
+  color: #fff;
+  text-shadow:
+    0 0 4px #fff,
+    0 0 12px var(--neon-rosa),
+    0 0 30px var(--neon-rosa),
+    0 0 62px rgba(255, 47, 135, .55);
+  animation: piscaNeon 7s infinite;
+}
+
+.marca__sub {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--neon-ciano);
+  text-shadow: 0 0 10px rgba(53, 229, 242, .6);
+}
+
+@keyframes piscaNeon {
+  0%, 92%, 96%, 100% { opacity: 1; }
+  93%  { opacity: .35; }
+  94%  { opacity: 1; }
+  95%  { opacity: .5; }
+}
+
+.busca {
+  flex: 1 1 220px;
+  min-width: 180px;
+  position: relative;
+}
+
+.busca input {
+  width: 100%;
+  padding: 11px 16px 11px 42px;
+  border-radius: 99px;
+  border: 1px solid var(--borda);
+  background: rgba(0, 0, 0, .5);
+  color: var(--creme);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.busca input::placeholder { color: var(--cinza-fraco); }
+.busca input:focus {
+  border-color: var(--neon-ciano);
+  box-shadow: 0 0 0 3px rgba(53, 229, 242, .16);
+}
+.busca::before {
+  content: '⌕';
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-52%);
+  font-size: 21px;
+  color: var(--cinza-fraco);
+  pointer-events: none;
+}
+
+.menu { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+.menu button,
+.menu a {
+  padding: 9px 15px;
+  border: 1px solid transparent;
+  border-radius: 99px;
+  background: transparent;
+  color: var(--cinza);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: 15px;
+  transition: color .18s, border-color .18s, background .18s;
+}
+.menu button:hover,
+.menu a:hover { color: var(--creme); background: rgba(255, 255, 255, .06); }
+
+.menu button.ativo {
+  color: #fff;
+  border-color: var(--neon-rosa);
+  background: rgba(255, 47, 135, .14);
+}
+
+.menu__admin {
+  border-color: var(--borda) !important;
+  color: var(--ambar) !important;
+}
+.menu__admin:hover { border-color: var(--ambar) !important; }
+
+/* filete de luz sob o cabeçalho */
+.fita-luz {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-rosa), var(--ambar), var(--neon-ciano), transparent);
+  opacity: .8;
+}
+
+/* --------------------------------------------------------------- conteúdo */
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 0 90px;
+}
+
+/* -------------------------------------------------------------- vitrine */
+
+.vitrine {
+  position: relative;
+  margin: 0 clamp(16px, 4vw, 52px) 26px;
+  border-radius: var(--raio);
+  overflow: hidden;
+  min-height: clamp(300px, 46vw, 480px);
+  display: flex;
+  align-items: flex-end;
+  border: 1px solid var(--borda);
+  box-shadow: var(--sombra-forte);
+  background: var(--tinta-2) center/cover no-repeat;
+}
+
+.vitrine__veu {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 8, 16, .96) 0%, rgba(10, 8, 16, .78) 46%, rgba(10, 8, 16, .18) 100%),
+    linear-gradient(0deg, rgba(10, 8, 16, .95) 0%, transparent 62%);
+}
+
+.vitrine__texto {
+  position: relative;
+  padding: clamp(22px, 4vw, 48px);
+  max-width: 640px;
+}
+
+.vitrine__etiqueta {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 12px;
+  font-family: var(--fonte-mono);
+  font-size: 16px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  background: var(--ambar);
+  border-radius: 3px;
+  transform: rotate(-1.4deg);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .4);
+}
+
+.vitrine h2 {
+  margin: 0 0 10px;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(38px, 6.2vw, 78px);
+  line-height: .95;
+  letter-spacing: .02em;
+  text-shadow: 0 4px 22px rgba(0, 0, 0, .8);
+}
+
+.vitrine__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: var(--cinza);
+  font-size: 16px;
+}
+
+.vitrine__sinopse {
+  margin: 0 0 20px;
+  color: #ddd3e6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vitrine__acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* --------------------------------------------------------------- botões */
+
+.bt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, .07);
+  color: var(--creme);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 15px;
+  text-decoration: none;
+  transition: transform .14s, background .18s, border-color .18s, box-shadow .18s;
+}
+.bt:hover { background: rgba(255, 255, 255, .14); transform: translateY(-1px); }
+.bt:active { transform: translateY(0); }
+
+.bt--principal {
+  background: var(--neon-rosa);
+  border-color: var(--neon-rosa);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 47, 135, .4);
+}
+.bt--principal:hover {
+  background: #ff4f9b;
+  box-shadow: 0 0 30px rgba(255, 47, 135, .6);
+}
+
+.bt--fantasma { background: transparent; }
+
+.bt--pequeno { padding: 7px 13px; font-size: 13px; }
+
+.bt--perigo {
+  border-color: #7a2436;
+  color: #ff8fa6;
+  background: rgba(122, 36, 54, .2);
+}
+.bt--perigo:hover { background: rgba(122, 36, 54, .42); }
+
+/* ---------------------------------------------------------- prateleiras */
+
+.prateleira { margin-bottom: 34px; }
+
+.prateleira__topo {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 0 clamp(16px, 4vw, 52px);
+  margin-bottom: 12px;
+}
+
+/* plaquinha de categoria, como as etiquetas coladas na estante */
+.prateleira__nome {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(22px, 2.6vw, 31px);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--creme);
+  position: relative;
+  padding-left: 16px;
+}
+.prateleira__nome::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12%;
+  bottom: 12%;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--neon-rosa), var(--ambar));
+  box-shadow: 0 0 12px rgba(255, 47, 135, .8);
+}
+
+.prateleira__contagem {
+  font-family: var(--fonte-mono);
+  font-size: 16px;
+  color: var(--cinza-fraco);
+  letter-spacing: .12em;
+}
+
+.prateleira__trilho { position: relative; }
+
+.prateleira__fitas {
+  display: flex;
+  gap: 16px;
+  padding: 8px clamp(16px, 4vw, 52px) 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: clamp(16px, 4vw, 52px);
+  scrollbar-width: none;
+}
+.prateleira__fitas::-webkit-scrollbar { display: none; }
+
+/* a tábua em que as fitas se apoiam */
+.prateleira__madeira {
+  position: relative;
+  height: 22px;
+  margin: 2px clamp(16px, 4vw, 52px) 0;
+  border-radius: 0 0 5px 5px;
+  /* topo claro (luz batendo), corpo, e a sombra da quina da frente */
+  background:
+    linear-gradient(180deg,
+      #9a663a 0%,
+      var(--madeira-alta) 14%,
+      var(--madeira) 46%,
+      #35200f 88%,
+      var(--madeira-baixa) 100%);
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, .7),
+    inset 0 2px 0 rgba(255, 214, 170, .38),
+    inset 0 -3px 5px rgba(0, 0, 0, .5);
+}
+
+/* veio da madeira + emendas das tábuas */
+.prateleira__madeira::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: .35;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 118px, rgba(0, 0, 0, .55) 118px 121px),
+    repeating-linear-gradient(180deg, transparent 0 3px, rgba(255, 220, 180, .07) 3px 4px);
+}
+
+/* setas de rolagem — sempre visíveis quando ainda há fita para o lado */
+.trilho__seta {
+  position: absolute;
+  top: 0;
+  bottom: 26px;               /* para não cobrir a legenda do filme */
+  width: clamp(46px, 5vw, 70px);
+  border: 0;
+  padding: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(90deg, rgba(10, 8, 16, .97) 45%, rgba(10, 8, 16, 0));
+}
+.trilho__seta--esq { left: 0; }
+.trilho__seta--dir {
+  right: 0;
+  background: linear-gradient(270deg, rgba(10, 8, 16, .97) 45%, rgba(10, 8, 16, 0));
+}
+.trilho__seta:focus-visible { outline: 2px solid var(--neon-ciano); outline-offset: -4px; }
+
+/* a abinha do recibo mora na borda direita — empurra a seta para não brigarem */
+body.com-recibo .trilho__seta--dir { right: 48px; }
+
+/* o botão redondo dentro da faixa escura */
+.trilho__seta i {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .55);
+  background: rgba(8, 6, 13, .94);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .8);
+  font-family: var(--fonte-texto);
+  font-style: normal;
+  font-size: 30px;
+  line-height: 1;
+  padding-bottom: 4px;
+  transition: transform .16s, background .16s, border-color .16s;
+}
+.trilho__seta:hover i {
+  transform: scale(1.12);
+  background: var(--neon-rosa);
+  border-color: var(--neon-rosa);
+}
+
+/* arrastar com o mouse, como quem empurra as fitas na estante */
+.prateleira__fitas.rolavel { cursor: grab; }
+.prateleira__fitas.arrastando {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+}
+.prateleira__fitas.arrastando .fita { pointer-events: none; }
+.prateleira__fitas.arrastando .fita:hover { transform: none; }
+
+/* Em tela estreita o dedo já arrasta sozinho e a seta cobriria a capa.
+   Critério é a largura, não "(hover: none)": aquela consulta some com as
+   setas em qualquer navegador que se declare sem mouse. */
+@media (max-width: 720px) { .trilho__seta { display: none; } }
+
+/* ============================================================ os avisos
+   Os cartazes que toda locadora tinha pendurados entre as estantes:
+   o letreiro de LED, o neon piscando, o papel escrito a caneta e a
+   plaquinha esmaltada.
+   ====================================================================== */
+
+.aviso-loja {
+  margin: 40px clamp(16px, 4vw, 52px) 44px;
+}
+
+/* logo abaixo do banner os dois ficam mais juntos, como a fachada da loja */
+#avisos-topo .aviso-loja { margin-top: 16px; margin-bottom: 16px; }
+#avisos-topo .aviso-loja:first-child { margin-top: 0; }
+#avisos-topo:not(:empty) { margin-bottom: 30px; }
+
+/* ---------------------------------------------- letreiro de LED rolando */
+
+.aviso-loja--led {
+  position: relative;
+  overflow: hidden;
+  padding: 13px 0;
+  border-radius: 5px;
+  border: 2px solid #2b2016;
+  background: #080604;
+  box-shadow:
+    inset 0 0 26px rgba(0, 0, 0, .95),
+    0 8px 20px rgba(0, 0, 0, .5);
+}
+
+.aviso-loja--led p {
+  margin: 0;
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;              /* começa fora da tela, à direita */
+  font-family: var(--fonte-mono);
+  font-size: clamp(19px, 2.3vw, 29px);
+  letter-spacing: .14em;
+  color: #ff5f2e;
+  text-shadow: 0 0 7px rgba(255, 95, 46, .95), 0 0 20px rgba(255, 60, 0, .6);
+  animation: correLed 30s linear infinite;
+}
+
+/* a malha de pontinhos que dá o aspecto de painel de LED */
+.aviso-loja--led::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .6) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg,  rgba(0, 0, 0, .6) 0 1px, transparent 1px 3px);
+}
+
+@keyframes correLed {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ------------------------------------------------------ o neon piscando */
+
+.aviso-loja--neon {
+  padding: 28px 22px 30px;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+  background:
+    radial-gradient(ellipse 70% 90% at 50% 45%, rgba(255, 47, 135, .17), transparent 72%),
+    linear-gradient(180deg, #100c18, #0a0810);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.aviso-loja--neon small {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--fonte-mono);
+  font-size: 17px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--neon-ciano);
+  text-shadow: 0 0 10px rgba(53, 229, 242, .7);
+}
+
+.aviso-loja--neon b {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: clamp(28px, 4.6vw, 52px);
+  line-height: 1;
+  letter-spacing: .07em;
+  color: #fff;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 15px var(--neon-rosa),
+    0 0 36px var(--neon-rosa),
+    0 0 74px rgba(255, 47, 135, .6);
+  animation: neonAviso 6.5s infinite;
+}
+
+/* o chiado de tubo velho: apaga e volta em tempos irregulares */
+@keyframes neonAviso {
+  0%, 40%, 44%, 47%, 82%, 86%, 100% { opacity: 1; }
+  41%  { opacity: .28; }
+  43%  { opacity: .85; }
+  45%  { opacity: .35; }
+  84%  { opacity: .4; }
+}
+
+/* ------------------------------------ o cartaz de papel colado com fita */
+
+.aviso-loja--papel {
+  position: relative;
+  max-width: 540px;
+  margin-inline: auto;
+  padding: 30px 34px 34px;
+  transform: rotate(-1.5deg);
+  text-align: center;
+  color: #2b2118;
+  background:
+    repeating-linear-gradient(0deg, rgba(120, 100, 70, .05) 0 24px, transparent 24px 25px),
+    linear-gradient(170deg, #f8efdb, #e6d9bb);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, .6);
+}
+
+/* os dois pedaços de fita adesiva nos cantos de cima */
+.aviso-loja--papel::before,
+.aviso-loja--papel::after {
+  content: '';
+  position: absolute;
+  top: -11px;
+  width: 84px;
+  height: 26px;
+  background: rgba(255, 253, 240, .42);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .35);
+}
+.aviso-loja--papel::before { left: -14px;  transform: rotate(-27deg); }
+.aviso-loja--papel::after  { right: -14px; transform: rotate(27deg); }
+
+.aviso-loja--papel b {
+  display: block;
+  margin-bottom: 10px;
+  font-family: 'Permanent Marker', var(--fonte-titulo), cursive;
+  font-weight: 400;
+  font-size: clamp(23px, 3.2vw, 35px);
+  line-height: 1.1;
+  color: #b3222f;
+  transform: rotate(.8deg);
+}
+
+.aviso-loja--papel span {
+  display: block;
+  font-family: 'Permanent Marker', var(--fonte-texto), cursive;
+  font-size: clamp(15px, 1.8vw, 20px);
+  line-height: 1.45;
+  color: #3a2d20;
+}
+
+/* -------------------------------------------------- a plaquinha esmaltada */
+
+.aviso-loja--placa {
+  max-width: 430px;
+  margin-inline: auto;
+  padding: 15px 28px;
+  text-align: center;
+  border-radius: 4px;
+  border: 3px solid #f2e8d2;
+  background: #16324e;
+  color: #f2e8d2;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(19px, 2.3vw, 27px);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, .55),
+    inset 0 2px 0 rgba(255, 255, 255, .2),
+    inset 0 -3px 6px rgba(0, 0, 0, .35);
+}
+
+/* --------------------------------------------------------- a fita (card) */
+
+.fita {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--capa-l);
+  scroll-snap-align: start;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+  transition: transform .22s cubic-bezier(.2, .8, .3, 1);
+}
+.fita:hover, .fita:focus-visible { transform: translateY(-10px); z-index: 3; }
+.fita:focus-visible { outline: 2px solid var(--neon-ciano); outline-offset: 6px; }
+
+.fita__caixa {
+  /* precisa ser bloco: <span> inline ignora aspect-ratio e a caixa estoura */
+  display: block;
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: 3px 5px 5px 3px;
+  overflow: hidden;
+  /* corpo preto da caixinha de VHS */
+  background: linear-gradient(135deg, #23202c, #100d16);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, .6),
+    inset 0 0 0 1px rgba(255, 255, 255, .07);
+}
+.fita:hover .fita__caixa {
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, .75),
+    0 0 0 2px var(--neon-rosa),
+    0 0 26px rgba(255, 47, 135, .45);
+}
+
+.fita__capa {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s;
+}
+.fita:hover .fita__capa { transform: scale(1.05); }
+
+/* lombada clara na borda esquerda, como a dobra da capa */
+.fita__caixa::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 9px;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .75), rgba(255, 255, 255, .12) 55%, rgba(0, 0, 0, .35));
+}
+/* brilho plástico diagonal */
+.fita__caixa::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, .16) 0%, transparent 34%, transparent 76%, rgba(255, 255, 255, .07) 100%);
+}
+
+/* quando não há capa: cartaz gerado com o título */
+.fita__semcapa {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 12px;
+  text-align: center;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .03) 0 8px, transparent 8px 16px),
+    linear-gradient(160deg, #2b1d3d, #14101c);
+}
+.fita__semcapa span {
+  font-family: var(--fonte-titulo);
+  font-size: 19px;
+  line-height: 1.05;
+  letter-spacing: .05em;
+  color: var(--creme);
+}
+.fita__semcapa em {
+  font-family: var(--fonte-mono);
+  font-style: normal;
+  font-size: 34px;
+  color: var(--neon-ciano);
+  opacity: .55;
+}
+
+/* ------------------------------------------- medalha da faixa de preço */
+/* O adesivo metálico que a locadora colava na capa: Diamante, Ouro,
+   Prata ou Bronze. Serve no cartão da fita e na ficha do filme. */
+.medalha {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 99px;
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  line-height: 1.25;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #241704;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .4);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, .6),
+    inset 0 1px 0 rgba(255, 255, 255, .65),
+    inset 0 -2px 4px rgba(0, 0, 0, .22);
+}
+
+.medalha--bronze   { background: linear-gradient(140deg, #eaad72 0%, #a45f26 52%, #d68f52 100%); }
+.medalha--prata    { background: linear-gradient(140deg, #fbfcff 0%, #a4aab6 52%, #e6e9f0 100%); }
+.medalha--ouro     { background: linear-gradient(140deg, #ffeda6 0%, #d5a017 52%, #ffd960 100%); }
+.medalha--diamante {
+  background: linear-gradient(140deg, #f2fdff 0%, #79cfec 50%, #c6f1ff 100%);
+  color: #06323f;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, .6),
+    0 0 16px rgba(121, 207, 236, .5),
+    inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+/* posição da medalha quando ela fica sobre a capa */
+.fita__faixa {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 4;
+}
+
+/* selos sobre a capa */
+.fita__selo {
+  position: absolute;
+  top: 8px;
+  left: 14px;
+  z-index: 4;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: var(--ambar);
+  color: #1a1208;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .5);
+}
+.fita__selo--fonte {
+  top: auto;
+  bottom: 8px;
+  left: 14px;
+  background: rgba(0, 0, 0, .78);
+  color: var(--neon-ciano);
+  box-shadow: none;
+  border: 1px solid rgba(53, 229, 242, .35);
+}
+
+/* barra de progresso de "continuar assistindo" */
+.fita__progresso {
+  position: absolute;
+  left: 9px; right: 0; bottom: 0;
+  height: 4px;
+  z-index: 4;
+  background: rgba(0, 0, 0, .7);
+}
+.fita__progresso i {
+  display: block;
+  height: 100%;
+  background: var(--neon-rosa);
+  box-shadow: 0 0 8px var(--neon-rosa);
+}
+
+.fita__legenda { display: block; padding: 9px 2px 0; }
+
+.fita__titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--creme);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fita__ano {
+  display: block;
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  color: var(--cinza-fraco);
+  letter-spacing: .1em;
+}
+
+/* ---------------------------------------------------------- estado vazio */
+
+.vazio {
+  margin: 60px auto;
+  max-width: 620px;
+  padding: 44px 32px;
+  text-align: center;
+  border: 2px dashed var(--borda);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .3);
+}
+.vazio__icone { font-size: 62px; line-height: 1; margin-bottom: 14px; }
+.vazio h2 {
+  margin: 0 0 10px;
+  font-family: var(--fonte-titulo);
+  font-size: 32px;
+  letter-spacing: .06em;
+}
+.vazio p { color: var(--cinza); margin: 0 0 22px; }
+
+/* o comando do terminal: um clique já seleciona tudo */
+.vazio .comando {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 10px 14px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  background: #000;
+  font-family: var(--fonte-mono);
+  font-size: 17px;
+  color: var(--neon-ciano);
+  white-space: nowrap;
+  user-select: all;
+}
+
+/* ---------------------------------------------------------------- rodapé */
+
+.rodape {
+  position: relative;
+  z-index: 1;
+  padding: 30px 20px 40px;
+  text-align: center;
+  font-family: var(--fonte-mono);
+  font-size: 17px;
+  letter-spacing: .14em;
+  color: var(--cinza-fraco);
+  border-top: 1px solid var(--borda);
+}
+.rodape button {
+  background: none;
+  border: 0;
+  color: var(--cinza-fraco);
+  font: inherit;
+  text-decoration: underline dotted;
+}
+.rodape button:hover { color: var(--neon-ciano); }
+
+/* --------------------------------------------------------------- diálogos */
+
+dialog {
+  padding: 0;
+  border: 0;
+  color: var(--creme);
+  background: transparent;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+dialog::backdrop {
+  background: rgba(4, 3, 8, .88);
+  backdrop-filter: blur(6px);
+}
+
+.ficha__corpo {
+  width: min(920px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid var(--borda);
+  background: var(--tinta-2);
+  box-shadow: var(--sombra-forte);
+}
+
+.ficha__arte {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  background: var(--tinta-3) center/cover no-repeat;
+}
+.ficha__arte::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, var(--tinta-2) 2%, rgba(18, 14, 28, .35) 60%, transparent 100%);
+}
+
+.ficha__fechar {
+  position: absolute;
+  top: 12px; right: 12px;
+  z-index: 5;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--borda);
+  background: rgba(0, 0, 0, .7);
+  color: var(--creme);
+  font-size: 20px;
+  line-height: 1;
+}
+.ficha__fechar:hover { background: var(--neon-rosa); border-color: var(--neon-rosa); }
+
+.ficha__dentro {
+  position: relative;
+  z-index: 2;
+  margin-top: -70px;
+  padding: 0 clamp(20px, 4vw, 38px) 34px;
+}
+
+.ficha__dentro h2 {
+  margin: 0 0 10px;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(30px, 4.6vw, 50px);
+  line-height: 1;
+  letter-spacing: .03em;
+}
+
+.ficha__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.selo {
+  padding: 3px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 3px;
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+.selo--nota { color: var(--ambar); border-color: rgba(255, 179, 64, .45); }
+.selo--fonte { color: var(--neon-ciano); border-color: rgba(53, 229, 242, .4); }
+
+.ficha__sinopse { color: #ddd3e6; margin: 0 0 22px; }
+.ficha__acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---------------------------------------------------------------- player */
+
+.player__corpo {
+  width: min(1240px, 96vw);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  background: #000;
+  box-shadow: var(--sombra-forte);
+}
+
+/* com o videocassete embaixo, a tela precisa caber junto na altura */
+.player__tela { max-height: calc(94vh - 210px); }
+
+.player__barra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--tinta-2);
+  border-bottom: 1px solid var(--borda);
+}
+.player__nome {
+  flex: 1;
+  font-family: var(--fonte-titulo);
+  font-size: 21px;
+  letter-spacing: .06em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__tela {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.player__tela iframe,
+.player__tela video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+.player__aviso {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 30px;
+  text-align: center;
+  background: linear-gradient(160deg, #1a1226, #0a0810);
+}
+.player__aviso p { max-width: 460px; color: var(--cinza); margin: 0; }
+.player__aviso strong { color: var(--creme); display: block; font-size: 20px; margin-bottom: 4px; }
+
+/* ====================================================== balcão de devolução
+   A bancada onde o freguês rebobina as fitas e paga a conta.
+   ======================================================================== */
+
+.devolucao {
+  margin: 6px clamp(16px, 4vw, 52px) 46px;
+}
+
+/* ------------------------------------------------ a bancada de rebobinar */
+
+.estacao {
+  padding: 30px clamp(16px, 3vw, 34px) 34px;
+  margin-bottom: 26px;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  background:
+    radial-gradient(ellipse 80% 90% at 50% 0%, rgba(255, 47, 135, .1), transparent 70%),
+    linear-gradient(180deg, #131020, #0b0912);
+}
+
+.estacao__titulo {
+  margin: 0 0 6px;
+  text-align: center;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(25px, 3.4vw, 38px);
+  letter-spacing: .07em;
+  color: var(--ambar);
+  text-shadow: 0 0 18px rgba(255, 179, 64, .4);
+}
+
+.estacao__texto {
+  margin: 0 auto 26px;
+  max-width: 520px;
+  text-align: center;
+  color: var(--cinza);
+}
+
+/* o móvel: a fita descansando em cima do aparelho */
+.movel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(470px, 100%);
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------------- a fita VHS */
+
+.vhs {
+  position: relative;
+  z-index: 2;
+  width: min(300px, 74%);
+  aspect-ratio: 1.72 / 1;
+  margin-bottom: -14px;          /* encosta na tampa do aparelho */
+  padding: 7% 6%;
+  transform: rotate(-1.6deg);
+  border-radius: 5px;
+  background:
+    linear-gradient(158deg, rgba(255, 255, 255, .12) 0%, transparent 30%),
+    linear-gradient(180deg, #36333f 0%, #221e2c 26%, #15111d 68%, #0b0910 100%);
+  box-shadow:
+    0 16px 30px rgba(0, 0, 0, .75),
+    inset 0 1px 0 rgba(255, 255, 255, .2),
+    inset 0 -3px 4px rgba(0, 0, 0, .75);
+}
+
+.vhs__etiqueta {
+  height: 52%;
+  padding: 7px 9px;
+  border-radius: 2px;
+  background: linear-gradient(170deg, #f8efdb, #e2d5b6);
+  color: #2b2118;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .55);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+.vhs__etiqueta small {
+  font-family: var(--fonte-mono);
+  font-size: 13px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #8a7a5e;
+}
+.vhs__etiqueta span {
+  font-family: 'Permanent Marker', var(--fonte-titulo), cursive;
+  font-size: clamp(15px, 2.1vw, 21px);
+  line-height: 1.08;
+  color: #1f2f6b;                /* caneta azul do balconista */
+  overflow: hidden;
+}
+
+.vhs__janela {
+  margin-top: 5%;
+  height: 33%;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 3px;
+  background: linear-gradient(180deg, rgba(160, 180, 205, .18), rgba(0, 0, 0, .62));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), inset 0 2px 6px rgba(0, 0, 0, .85);
+}
+
+.vhs__carretel {
+  position: relative;
+  height: 92%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle at 50% 50%, #2b2118 0 2px, #150f0a 2px 4px);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, .95);
+}
+/* o cubo com três raios — é o que deixa o giro visível */
+.vhs__carretel::before {
+  content: '';
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ded6c2 0 9deg, #6d6558 9deg 111deg,
+    #ded6c2 111deg 129deg, #6d6558 129deg 231deg,
+    #ded6c2 231deg 249deg, #6d6558 249deg 360deg);
+}
+
+.vhs__tape {
+  flex: 1;
+  height: 26%;
+  margin: 0 5%;
+  background: linear-gradient(180deg, #3c2e1f, #1b1510);
+  box-shadow: inset 0 1px 0 rgba(255, 220, 170, .16);
+}
+
+.vhs__selo {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-family: var(--fonte-mono);
+  font-size: 14px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: #a8202f;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .6);
+}
+.vhs--pronta .vhs__selo { background: #1d6b3a; }
+
+/* girando durante a rebobinagem */
+.vhs--rebobinando .vhs__carretel::before {
+  animation: giraCarretel .4s linear infinite reverse;
+}
+@keyframes giraCarretel { to { transform: rotate(360deg); } }
+
+/* --------------------------------------------------------- o videocassete */
+
+.aparelho {
+  position: relative;
+  width: 100%;
+  padding: 16px 18px 18px;
+  border-radius: 7px;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .022) 0 2px, transparent 2px 4px),
+    linear-gradient(180deg, #35353b 0%, #232329 18%, #1a1a1f 60%, #101013 100%);
+  box-shadow:
+    0 22px 44px rgba(0, 0, 0, .8),
+    inset 0 1px 0 rgba(255, 255, 255, .22),
+    inset 0 -4px 6px rgba(0, 0, 0, .7);
+}
+
+.aparelho__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.aparelho__marca {
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  letter-spacing: .22em;
+  color: #6e6a7a;
+}
+
+.aparelho__visor {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 6px 14px;
+  border-radius: 3px;
+  background: #06110a;
+  box-shadow: inset 0 2px 7px rgba(0, 0, 0, .95);
+  font-family: var(--fonte-mono);
+  color: #5cff9d;
+  text-shadow: 0 0 8px rgba(92, 255, 157, .9);
+}
+#visor-estado { font-size: 16px; letter-spacing: .2em; font-weight: 400; }
+#visor-tempo  { font-size: 26px; letter-spacing: .1em; font-weight: 400; }
+
+/* a boca onde entra a fita */
+.aparelho__slot {
+  height: 34px;
+  margin-bottom: 14px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #0a0a0c, #17171c 60%, #0d0d10);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, .95), 0 1px 0 rgba(255, 255, 255, .07);
+}
+.aparelho__slot span {
+  font-family: var(--fonte-mono);
+  font-size: 14px;
+  letter-spacing: .28em;
+  color: #3a3844;
+}
+
+.aparelho__botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.aparelho__botoes button {
+  flex: 1 1 auto;
+  min-width: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 9px 3px 7px;
+  border: 0;
+  border-radius: 4px;
+  color: #cfcbd6;
+  background: linear-gradient(180deg, #4c4c55, #313139 55%, #24242a);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .3),
+    inset 0 -2px 3px rgba(0, 0, 0, .55),
+    0 2px 4px rgba(0, 0, 0, .6);
+  transition: transform .08s, box-shadow .08s, color .15s;
+}
+.aparelho__botoes button:hover { color: #fff; }
+.aparelho__botoes button:active,
+.aparelho__botoes button.aceso {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .82);
+  color: var(--neon-ciano);
+}
+.aparelho__botoes button:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+
+.aparelho__botoes [data-maq="rebobinar"] {
+  background: linear-gradient(180deg, #7a4324, #4f2915 55%, #38190b);
+  color: #ffd0a8;
+}
+.aparelho__botoes i { font-style: normal; font-size: 16px; }
+.aparelho__botoes span {
+  font-family: var(--fonte-mono);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------- o caixa */
+
+.caixa {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 26px 26px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  background: linear-gradient(180deg, #141020, #0c0a13);
+}
+
+.caixa__conta {
+  margin-bottom: 18px;
+  font-family: var(--fonte-mono);
+  font-size: 19px;
+  color: var(--cinza);
+}
+.caixa__conta b { color: var(--creme); font-weight: 400; }
+.caixa__conta .devendo { color: #ff7a8c; }
+
+/* o botão cor de dinheiro */
+.bt--dinheiro {
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  font-size: 19px;
+  letter-spacing: .08em;
+  color: #f2fff7;
+  border-color: #2f8f5c;
+  background:
+    repeating-linear-gradient(48deg, rgba(255, 255, 255, .06) 0 2px, transparent 2px 7px),
+    linear-gradient(160deg, #46b478 0%, #23814f 52%, #14603a 100%);
+  box-shadow:
+    0 8px 22px rgba(31, 122, 74, .45),
+    inset 0 1px 0 rgba(255, 255, 255, .35),
+    inset 0 -3px 6px rgba(0, 0, 0, .3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .45);
+}
+.bt--dinheiro:hover {
+  background:
+    repeating-linear-gradient(48deg, rgba(255, 255, 255, .08) 0 2px, transparent 2px 7px),
+    linear-gradient(160deg, #55c98a 0%, #2b9760 52%, #1a7146 100%);
+  box-shadow: 0 10px 28px rgba(31, 122, 74, .6), inset 0 1px 0 rgba(255, 255, 255, .4);
+}
+.bt--dinheiro:disabled {
+  filter: grayscale(.75);
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.bt__cifrao {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .55);
+  font-family: var(--fonte-titulo);
+  font-size: 21px;
+  line-height: 1;
+}
+.bt__valor {
+  font-family: var(--fonte-mono);
+  font-size: 23px;
+  letter-spacing: .06em;
+}
+
+.caixa__nota {
+  margin: 14px 0 0;
+  font-size: 16px;
+  color: var(--cinza-fraco);
+}
+
+/* ================================= a cobrança que aparece ao entrar no site */
+
+.cobranca {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(16px, 4vh, 40px);
+  transform: translateX(-50%) rotate(-.8deg);
+  z-index: 940;
+  width: min(430px, 92vw);
+  padding: 22px 24px 24px;
+  color: #2b2118;
+  background:
+    repeating-linear-gradient(0deg, rgba(120, 100, 70, .05) 0 22px, transparent 22px 23px),
+    linear-gradient(170deg, #f8efdb, #e6d9bb);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, .75);
+  animation: entraCobranca .4s cubic-bezier(.2, .9, .3, 1.25);
+}
+@keyframes entraCobranca {
+  from { opacity: 0; transform: translateX(-50%) rotate(-.8deg) translateY(30px); }
+  to   { opacity: 1; transform: translateX(-50%) rotate(-.8deg) translateY(0); }
+}
+
+.cobranca__selo {
+  position: absolute;
+  top: -13px;
+  left: 20px;
+  padding: 4px 14px;
+  background: #a8202f;
+  color: #fff;
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .55);
+}
+
+.cobranca strong {
+  display: block;
+  margin-bottom: 8px;
+  font-family: 'Permanent Marker', var(--fonte-titulo), cursive;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: 1.12;
+  color: #a8202f;
+}
+.cobranca p {
+  margin: 0 0 16px;
+  font-family: var(--fonte-mono);
+  font-size: 18px;
+  line-height: 1.35;
+}
+.cobranca__acoes { display: flex; gap: 9px; }
+.cobranca__acoes .bt { flex: 1; justify-content: center; }
+.cobranca__acoes .bt--fantasma { border-color: #b6a685; color: #6b5b45; }
+.cobranca__acoes .bt--fantasma:hover { background: rgba(0, 0, 0, .07); }
+
+/* ========================================================= cupom de locação
+   O papelzinho que saía da impressora matricial no balcão.
+   ========================================================================= */
+
+.cupom {
+  position: relative;
+  width: min(400px, 92vw);
+  margin: 8px auto 46px;
+  padding: 28px 26px 34px;
+  color: #241d14;
+  font-family: var(--fonte-mono);
+  font-size: 19px;
+  line-height: 1.35;
+  background:
+    repeating-linear-gradient(0deg, rgba(120, 100, 70, .045) 0 26px, transparent 26px 27px),
+    linear-gradient(180deg, #f7f1e2, #ece3cd);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .6);
+  /* a borda serrilhada de quem arrancou o papel do rolo */
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 11px 100%;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 11px 100%;
+}
+
+.cupom__loja {
+  text-align: center;
+  margin-bottom: 4px;
+  font-family: var(--fonte-titulo);
+  font-size: 30px;
+  letter-spacing: .14em;
+}
+
+.cupom__sub {
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #6b5b45;
+}
+
+.cupom hr {
+  border: 0;
+  border-top: 2px dashed #b6a685;
+  margin: 14px 0;
+}
+
+.cupom__linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cupom__item { margin-bottom: 9px; }
+.cupom__item b { font-weight: 400; display: block; text-transform: uppercase; }
+.cupom__item .cupom__linha { color: #6b5b45; font-size: 17px; }
+.cupom__item--gratis b { color: #1d6b3a; }
+.cupom__item--gratis .cupom__linha span:last-child { color: #1d6b3a; }
+
+.cupom__total {
+  font-size: 25px;
+  font-family: var(--fonte-titulo);
+  letter-spacing: .08em;
+}
+
+.cupom__multa { color: #a8202f; }
+
+/* o carimbo do prazo */
+.cupom__prazo {
+  margin: 16px 0 4px;
+  padding: 12px 10px;
+  text-align: center;
+  border: 3px double #a8202f;
+  color: #a8202f;
+  transform: rotate(-1.2deg);
+}
+.cupom__prazo b {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: 26px;
+  letter-spacing: .07em;
+}
+.cupom__prazo small { font-size: 16px; letter-spacing: .1em; opacity: .85; }
+
+.cupom__prazo--atrasado {
+  border-color: #a8202f;
+  background: rgba(168, 32, 47, .12);
+  animation: piscaAtraso 1.4s steps(2) infinite;
+}
+@keyframes piscaAtraso { 50% { opacity: .55; } }
+
+.cupom__rodape {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 17px;
+  letter-spacing: .1em;
+  color: #6b5b45;
+}
+
+.cupom__acoes {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+/* --------------------------------- o recibo pendurado na lateral da tela */
+
+.recibo {
+  position: fixed;
+  top: clamp(84px, 13vh, 138px);
+  right: 0;
+  z-index: 700;
+  display: flex;
+  align-items: flex-start;
+  /* fechado, só a abinha fica para fora */
+  transform: translateX(calc(100% - 46px));
+  transition: transform .34s cubic-bezier(.2, .8, .3, 1);
+}
+.recibo.aberto { transform: translateX(0); }
+
+/* a aba de cartolina que fica espiando na borda */
+.recibo__aba {
+  flex: 0 0 46px;
+  height: 190px;
+  padding: 18px 0;
+  border: 0;
+  border-radius: 7px 0 0 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(90deg, #d9c9a4, #efe4cb 40%, #cdbc97);
+  color: #2b2118;
+  font-family: var(--fonte-mono);
+  font-size: 17px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  box-shadow: -5px 0 16px rgba(0, 0, 0, .55);
+  transition: background .2s, color .2s;
+}
+.recibo__aba:hover { background: linear-gradient(90deg, #e6d6b2, #fff6e2 40%, #dccaa4); }
+
+/* o clipe de metal preso na aba */
+.recibo__aba::before {
+  content: '🧾';
+  writing-mode: horizontal-tb;
+  font-size: 21px;
+  line-height: 1;
+}
+
+.recibo__papel {
+  width: min(340px, 84vw);
+  max-height: calc(100vh - clamp(104px, 17vh, 172px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 0 4px;
+  background: transparent;
+  filter: drop-shadow(-8px 10px 22px rgba(0, 0, 0, .6));
+}
+
+/* dentro da lateral o cupom encolhe e perde as margens de página */
+.recibo__papel .cupom {
+  width: 100%;
+  margin: 0;
+  padding: 22px 20px 30px;
+  font-size: 17px;
+  box-shadow: none;
+}
+.recibo__papel .cupom__loja { font-size: 26px; }
+.recibo__papel .cupom__total { font-size: 22px; }
+.recibo__papel .cupom__prazo b { font-size: 22px; }
+/* o botão fica solto abaixo da borda rasgada do papel */
+.recibo__papel .cupom__acoes { padding: 14px 20px 6px; }
+.recibo__papel .cupom__acoes .bt { width: 100%; justify-content: center; }
+
+/* ==================================================== o videocassete (VCR) */
+
+.videocassete {
+  padding: 14px 16px 16px;
+  border-top: 1px solid #000;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .022) 0 2px, transparent 2px 4px),
+    linear-gradient(180deg, #2a2a2e 0%, #1c1c20 42%, #121214 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+
+/* o visor de LED verde */
+.videocassete__visor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding: 7px 14px;
+  border-radius: 3px;
+  background: #06110a;
+  box-shadow: inset 0 2px 7px rgba(0, 0, 0, .95);
+  font-family: var(--fonte-mono);
+  color: #5cff9d;
+  text-shadow: 0 0 7px rgba(92, 255, 157, .85);
+}
+.videocassete__estado { font-size: 18px; letter-spacing: .22em; }
+.videocassete__contador { font-size: 27px; letter-spacing: .1em; }
+
+.videocassete__botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.videocassete__botoes button {
+  flex: 1 1 auto;
+  min-width: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 9px 6px 7px;
+  border: 0;
+  border-radius: 4px;
+  color: #cfcbd6;
+  /* tecla de plástico com chanfro */
+  background: linear-gradient(180deg, #4a4a52, #303038 55%, #232329);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .3),
+    inset 0 -2px 3px rgba(0, 0, 0, .55),
+    0 2px 4px rgba(0, 0, 0, .6);
+  transition: transform .08s, box-shadow .08s, color .15s;
+}
+.videocassete__botoes button:hover { color: #fff; }
+.videocassete__botoes button:active,
+.videocassete__botoes button.apertado {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .8);
+  color: var(--neon-ciano);
+}
+.videocassete__botoes button:disabled {
+  opacity: .38;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.videocassete__botoes i {
+  font-style: normal;
+  font-size: 17px;
+  letter-spacing: .06em;
+}
+.videocassete__botoes span {
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+/* o botão de rebobinar é o protagonista */
+.videocassete__botoes [data-vcr="rebobinar"] {
+  background: linear-gradient(180deg, #6a3a20, #4a2614 55%, #35190c);
+  color: #ffd0a8;
+}
+
+.videocassete__nota {
+  margin: 11px 0 0;
+  font-size: 15px;
+  color: var(--cinza-fraco);
+  text-align: center;
+}
+
+/* ------------------------------------------------- a tela rebobinando */
+
+.player__tela.rebobinando::before {
+  content: '◀◀ REBOBINANDO';
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  z-index: 6;
+  font-family: var(--fonte-mono);
+  font-size: clamp(18px, 2.4vw, 26px);
+  letter-spacing: .22em;
+  color: #fff;
+  text-shadow: 0 0 10px #000, 0 0 3px #000;
+  animation: piscaRebobina .55s steps(2) infinite;
+}
+@keyframes piscaRebobina { 50% { opacity: 0; } }
+
+/* o chuvisco de fita passando rápido */
+.player__tela.rebobinando::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    repeating-linear-gradient(0deg,
+      rgba(255, 255, 255, .16) 0 2px,
+      transparent 2px 6px);
+  animation: chuvisco .12s steps(2) infinite;
+}
+@keyframes chuvisco {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+/* ============================================== a janela flutuante de multa */
+
+.multa {
+  position: fixed;
+  /* fica sobre o filme, no alto: embaixo cobriria os botões do videocassete */
+  right: clamp(14px, 3vw, 30px);
+  top: clamp(74px, 13vh, 130px);
+  z-index: 950;
+  width: min(330px, 88vw);
+  padding: 20px 22px 22px;
+  transform: rotate(-1.2deg);
+  color: #2b2118;
+  background:
+    repeating-linear-gradient(0deg, rgba(120, 100, 70, .05) 0 22px, transparent 22px 23px),
+    linear-gradient(170deg, #f8efdb, #e6d9bb);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, .7);
+  animation: entraMulta .35s cubic-bezier(.2, .9, .3, 1.3);
+}
+
+@keyframes entraMulta {
+  from { opacity: 0; transform: rotate(-1.2deg) translateY(26px) scale(.94); }
+  to   { opacity: 1; transform: rotate(-1.2deg) translateY(0) scale(1); }
+}
+
+.multa__selo {
+  position: absolute;
+  top: -12px;
+  left: 18px;
+  padding: 3px 12px;
+  background: #a8202f;
+  color: #fff;
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, .5);
+}
+
+.multa strong {
+  display: block;
+  margin-bottom: 8px;
+  font-family: 'Permanent Marker', var(--fonte-titulo), cursive;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.1;
+  color: #a8202f;
+}
+
+.multa p {
+  margin: 0 0 16px;
+  font-family: var(--fonte-mono);
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.multa .bt {
+  width: 100%;
+  justify-content: center;
+  border-color: #a8202f;
+  background: #a8202f;
+  color: #fff;
+}
+.multa .bt:hover { background: #c02536; }
+
+/* =========================================================================
+   BALCÃO (admin.html)
+   ========================================================================= */
+
+.balcao {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 26px clamp(16px, 4vw, 40px) 90px;
+}
+
+.painel {
+  margin-bottom: 22px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: rgba(18, 14, 28, .82);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+}
+
+.painel__cabeca {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--borda);
+}
+.painel__cabeca h2 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 25px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.painel__cabeca p { margin: 3px 0 0; font-size: 15px; color: var(--cinza-fraco); }
+
+.painel__dentro { padding: 20px; }
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 15px;
+}
+.grade--2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.col-inteira { grid-column: 1 / -1; }
+
+.campo { display: flex; flex-direction: column; gap: 5px; }
+
+.campo > label {
+  font-family: var(--fonte-mono);
+  font-size: 16px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+
+.campo input[type="text"],
+.campo input[type="url"],
+.campo input[type="number"],
+.campo input[type="password"],
+.campo select,
+.campo textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--borda);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, .48);
+  color: var(--creme);
+  outline: none;
+  transition: border-color .18s, box-shadow .18s;
+}
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: var(--neon-ciano);
+  box-shadow: 0 0 0 3px rgba(53, 229, 242, .14);
+}
+.campo textarea { resize: vertical; min-height: 92px; line-height: 1.45; }
+.campo small { color: var(--cinza-fraco); font-size: 14px; }
+
+/* caixinhas de gênero */
+.generos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.generos label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--borda);
+  border-radius: 99px;
+  background: rgba(0, 0, 0, .35);
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color .16s, background .16s, color .16s;
+}
+.generos label:hover { border-color: var(--cinza-fraco); }
+.generos input { accent-color: var(--neon-rosa); margin: 0; }
+.generos label:has(input:checked) {
+  border-color: var(--neon-rosa);
+  background: rgba(255, 47, 135, .18);
+  color: #fff;
+}
+
+.linha-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.linha-check input { accent-color: var(--neon-rosa); width: 17px; height: 17px; }
+
+.acoes-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--borda);
+}
+
+/* pré-visualização da capa no formulário */
+.previa {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+.previa__capa {
+  flex: 0 0 118px;
+  aspect-ratio: 2 / 3;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  background: var(--tinta-3) center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-mono);
+  color: var(--cinza-fraco);
+  font-size: 15px;
+  text-align: center;
+}
+
+/* tabela do acervo */
+.acervo { display: flex; flex-direction: column; gap: 8px; }
+
+.item {
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 9px 12px;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, .3);
+  transition: border-color .16s, background .16s;
+}
+.item:hover { border-color: var(--cinza-fraco); background: rgba(0, 0, 0, .5); }
+.item--editando { border-color: var(--neon-rosa); background: rgba(255, 47, 135, .1); }
+
+.item__capa {
+  width: 54px;
+  aspect-ratio: 2 / 3;
+  border-radius: 3px;
+  object-fit: cover;
+  background: var(--tinta-3);
+}
+
+.item__info { min-width: 0; }
+.item__titulo {
+  font-weight: 600;
+  font-size: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item__sub {
+  font-family: var(--fonte-mono);
+  font-size: 15px;
+  color: var(--cinza-fraco);
+  letter-spacing: .06em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item__bts { display: flex; gap: 6px; }
+
+/* avisos */
+.aviso {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: 5px;
+  border-left: 4px solid var(--cinza-fraco);
+  background: rgba(0, 0, 0, .4);
+  font-size: 16px;
+}
+.aviso--ok   { border-color: #3ddc84; color: #b6f5d0; background: rgba(61, 220, 132, .12); }
+.aviso--erro { border-color: #ff5470; color: #ffc2cc; background: rgba(255, 84, 112, .12); }
+.aviso--dica { border-color: var(--ambar); color: #ffe0b0; background: rgba(255, 179, 64, .1); }
+
+/* tranca de entrada do admin */
+.tranca {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  margin: 12vh auto;
+  padding: 34px 30px;
+  text-align: center;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  background: rgba(18, 14, 28, .9);
+  box-shadow: var(--sombra-forte);
+}
+.tranca h2 {
+  margin: 0 0 6px;
+  font-family: var(--fonte-titulo);
+  font-size: 30px;
+  letter-spacing: .08em;
+}
+.tranca p { color: var(--cinza); font-size: 15px; margin: 0 0 20px; }
+.tranca input { width: 100%; text-align: center; letter-spacing: .3em; margin-bottom: 12px; }
+
+/* ------------------------------------------------------------ responsivo */
+
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+  .topo__interno { padding: 12px 16px; gap: 12px; }
+  .marca { flex: 1 1 100%; }
+  .busca { order: 3; flex: 1 1 100%; }
+  .vitrine { min-height: 340px; margin-inline: 12px; }
+  .item { grid-template-columns: 44px 1fr; }
+  .item__capa { width: 44px; }
+  .item__bts { grid-column: 1 / -1; justify-content: flex-end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  html { scroll-behavior: auto; }
+
+  /* o letreiro começa fora da tela e só entra pela animação: sem ela,
+     ficaria em branco. Trava o texto no lugar em vez de piscar. */
+  .aviso-loja--led p {
+    animation: none !important;
+    padding-left: 2%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 96%;
+  }
+  .aviso-loja--neon b { animation: none !important; }
+  .marca__neon { animation: none !important; }
+}
+
+/* impressão: a lista do acervo em papel */
+@media print {
+  .crt, .topo, .trilho__seta, .rodape { display: none !important; }
+  body { background: #fff; color: #000; }
+}
