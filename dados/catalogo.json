@@ -2,7 +2,7 @@
   "versao": 1,
   "nomeLocadora": "Locadora",
   "assinatura": "vídeo clube particular",
-  "atualizadoEm": "2026-08-02T18:42:48.616Z",
+  "atualizadoEm": "2026-08-02T18:48:19.660Z",
   "categorias": [
     "Ação",
     "Aventura",
@@ -19,6 +19,26 @@
     "Infantil"
   ],
   "filmes": [
+    {
+      "titulo": "AMERICA SHAOLIN",
+      "tituloOriginal": "",
+      "ano": 1991,
+      "duracao": 115,
+      "classificacao": "14",
+      "nota": 8,
+      "faixa": "Bronze",
+      "sinopse": "Drew Carson, um jovem americano humilhado em uma luta de artes marciais, decide viajar para a China em busca de redenção. Lá, ele é aceito em um templo Shaolin, onde passa por intenso treinamento físico e espiritual. Ao longo da jornada, Drew aprende não apenas técnicas de combate, mas também valores de disciplina, humildade e respeito.",
+      "capa": "https://www.cinematerial.com/p/500x/wmxdzwrl/american-shaolin-brazilian-movie-cover.jpg?v=1577461968",
+      "fundo": "",
+      "generos": [
+        "Artes Marciais"
+      ],
+      "destaque": false,
+      "url": "https://youtu.be/vmYxvcLq9Fg",
+      "fonte": "youtube",
+      "id": "826ccfd8",
+      "adicionadoEm": "2026-08-02T18:48:19.658Z"
+    },
     {
       "titulo": "FURIA DO DRAGÃO",
       "tituloOriginal": "",
