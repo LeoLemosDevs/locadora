@@ -2,7 +2,7 @@
   "versao": 1,
   "nomeLocadora": "Locadora",
   "assinatura": "vídeo clube particular",
-  "atualizadoEm": "2026-08-02T18:23:47.344Z",
+  "atualizadoEm": "2026-08-02T18:33:37.216Z",
   "categorias": [
     "Ação",
     "Aventura",
@@ -19,6 +19,26 @@
     "Infantil"
   ],
   "filmes": [
+    {
+      "titulo": "O REI DOS KICKBOXERS",
+      "tituloOriginal": "",
+      "ano": 1990,
+      "duracao": 105,
+      "classificacao": "14",
+      "nota": null,
+      "faixa": "Bronze",
+      "sinopse": "Jake Donahue, um policial de Nova York, descobre que seu irmão foi morto por Khan, um lutador brutal que estrela filmes ilegais de artes marciais. Determinado a vingar a morte, Jake viaja para a Tailândia, onde recebe treinamento intensivo para enfrentar Khan em um combate mortal.",
+      "capa": "https://image.tmdb.org/t/p/original/jrE2v6bX1MYKi7g1fvygGPVYF7U.jpg",
+      "fundo": "",
+      "generos": [
+        "Artes Marciais"
+      ],
+      "destaque": false,
+      "url": "https://youtu.be/cS0S932WsPc",
+      "fonte": "youtube",
+      "id": "2fe71946",
+      "adicionadoEm": "2026-08-02T18:33:37.214Z"
+    },
     {
       "titulo": "KICKBOXER",
       "tituloOriginal": "",
