@@ -418,12 +418,18 @@
       el.prateleiras.innerHTML = '';
       el.avisosTopo.innerHTML = '';
       el.vazio.hidden = false;
+      // O botão leva ao balcão, que é do dono. Numa busca sem resultado ou na
+      // lista vazia quem está na tela é visitante, então ele não aparece.
+      el.vazioBt.hidden = false;
+
       if (termo.trim()) {
         el.vazioTitulo.textContent = 'Nada encontrado';
         el.vazioTexto.textContent = 'Nenhuma fita bate com “' + termo.trim() + '”. Tente outro título ou gênero.';
+        el.vazioBt.hidden = true;
       } else if (aba === 'lista') {
         el.vazioTitulo.textContent = 'Nenhuma fita alugada';
         el.vazioTexto.textContent = 'Abra a ficha de um filme e toque em “Alugar” para levar a fita para casa.';
+        el.vazioBt.hidden = true;
       } else if (L.abertoDoDisco()) {
         // Dois cliques no index.html: o navegador proíbe ler o catálogo por CORS.
         // Monta o comando já com o caminho real desta pasta.

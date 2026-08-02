@@ -4,8 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Locadora — Vídeo Clube Particular</title>
-<meta name="description" content="Meu acervo particular de filmes.">
+<meta name="description" content="Um vídeo clube de bairro que nunca fechou. Escolha a fita na prateleira, leve para casa e devolva rebobinada.">
 <meta name="theme-color" content="#0a0810">
+
+<!-- O cartão que aparece quando o link é colado no WhatsApp, no Instagram ou
+     no Telegram. A imagem precisa de endereço absoluto: esses aplicativos
+     buscam o arquivo pelo servidor deles, não pelo navegador de quem clicou.
+     Ao trocar o endereço do site, troque também as três URLs abaixo. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Locadora">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://leolemosdevs.github.io/locadora/">
+<meta property="og:title" content="Locadora — vídeo clube particular">
+<meta property="og:description" content="Um vídeo clube de bairro que nunca fechou. Escolha a fita na prateleira, leve para casa e devolva rebobinada.">
+<meta property="og:image" content="https://leolemosdevs.github.io/locadora/assets/social.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Letreiro de neon escrito LOCADORA sobre uma prateleira de fitas VHS.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Locadora — vídeo clube particular">
+<meta name="twitter:description" content="Um vídeo clube de bairro que nunca fechou. Escolha a fita na prateleira, leve para casa e devolva rebobinada.">
+<meta name="twitter:image" content="https://leolemosdevs.github.io/locadora/assets/social.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230a0810'/%3E%3Crect x='3' y='8' width='26' height='16' rx='2' fill='%23231f2c' stroke='%23ff2f87'/%3E%3Ccircle cx='11' cy='16' r='3.4' fill='%2335e5f2'/%3E%3Ccircle cx='21' cy='16' r='3.4' fill='%2335e5f2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,10 +48,12 @@
       <input id="busca" type="search" placeholder="Procurar na prateleira…" autocomplete="off" aria-label="Procurar filme">
     </div>
 
+    <!-- O balcão não entra no menu: a vitrine é para os visitantes, e a tela
+         de senha do admin.html só confundiria quem chega pelo link. O dono
+         entra digitando /admin.html. -->
     <nav class="menu">
       <button type="button" data-aba="acervo" class="ativo">Acervo</button>
       <button type="button" data-aba="lista">Filmes alugados</button>
-      <a href="admin.html" class="menu__admin" title="Painel de administração">Balcão</a>
     </nav>
   </div>
   <div class="fita-luz"></div>

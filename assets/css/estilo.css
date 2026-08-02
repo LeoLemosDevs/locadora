@@ -224,12 +224,6 @@ body.sem-crt .crt { display: none; }
   background: rgba(255, 47, 135, .14);
 }
 
-.menu__admin {
-  border-color: var(--borda) !important;
-  color: var(--ambar) !important;
-}
-.menu__admin:hover { border-color: var(--ambar) !important; }
-
 /* filete de luz sob o cabeçalho */
 .fita-luz {
   height: 2px;

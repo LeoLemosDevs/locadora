@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tinta: #0a0810; --tinta-2: #120e1c; --tinta-3: #1b1528; --borda: #2b2340;
+    --madeira: #4a2c17; --madeira-alta: #7a4a26; --madeira-baixa: #2a170c;
+    --neon-rosa: #ff2f87; --neon-ciano: #35e5f2; --ambar: #ffb340;
+    --creme: #f6ecd8; --cinza: #a096b4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: var(--tinta);
+    font-family: 'Barlow Condensed', sans-serif;
+    position: relative;
+  }
+
+  /* brilho do neon batendo na parede */
+  .halo {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(760px 420px at 50% 30%, rgba(255, 47, 135, .20), transparent 68%),
+      radial-gradient(520px 320px at 16% 78%, rgba(53, 229, 242, .13), transparent 70%),
+      linear-gradient(180deg, #16111f 0%, var(--tinta) 62%);
+  }
+
+  /* linhas de varredura da TV */
+  .crt {
+    position: absolute; inset: 0; opacity: .3;
+    background: repeating-linear-gradient(180deg, rgba(0,0,0,.5) 0 1px, transparent 1px 3px);
+  }
+
+  .conteudo {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding-bottom: 120px;
+  }
+
+  .marca {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 176px; line-height: .92; letter-spacing: .07em;
+    color: #fff; text-indent: .07em;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 18px var(--neon-rosa),
+      0 0 44px var(--neon-rosa),
+      0 0 96px rgba(255, 47, 135, .6);
+  }
+
+  .sub {
+    margin-top: 20px;
+    font-family: 'VT323', monospace;
+    font-size: 40px; letter-spacing: .34em; text-transform: uppercase;
+    color: var(--neon-ciano); text-indent: .34em;
+    text-shadow: 0 0 14px rgba(53, 229, 242, .65);
+  }
+
+  .fita-luz {
+    width: 620px; height: 3px; margin-top: 34px;
+    background: linear-gradient(90deg, transparent, var(--neon-rosa), var(--ambar), var(--neon-ciano), transparent);
+    box-shadow: 0 0 20px rgba(255, 47, 135, .55);
+  }
+
+  .frase {
+    margin-top: 30px;
+    font-size: 34px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--creme); text-indent: .16em; opacity: .92;
+  }
+
+  /* a prateleira com as fitas, no rodapé */
+  .estante { position: absolute; left: 0; right: 0; bottom: 0; height: 120px; }
+
+  .fitas {
+    position: absolute; bottom: 26px; left: 0; right: 0;
+    display: flex; justify-content: center; align-items: flex-end; gap: 16px;
+  }
+  .fita {
+    width: 74px; height: 108px; border-radius: 3px;
+    background: linear-gradient(150deg, #2a2138, #1a1426);
+    border: 1px solid #3a3050;
+    box-shadow: 0 10px 22px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.06);
+    position: relative;
+  }
+  .fita::after {
+    content: ''; position: absolute; left: 9px; right: 9px; top: 18px; height: 15px;
+    border-radius: 2px; background: rgba(246, 236, 216, .82);
+  }
+  .fita::before {
+    content: ''; position: absolute; left: 50%; top: 62px; transform: translateX(-50%);
+    width: 30px; height: 13px; border-radius: 2px;
+    border: 1px solid rgba(53, 229, 242, .5); background: rgba(53, 229, 242, .1);
+  }
+  .fita:nth-child(3n)   { height: 114px; }
+  .fita:nth-child(4n+1) { height: 102px; }
+
+  .madeira {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 26px;
+    background: linear-gradient(180deg, var(--madeira-alta), var(--madeira) 42%, var(--madeira-baixa));
+    box-shadow: 0 -8px 24px rgba(0,0,0,.55);
+  }
+
+  /* a etiqueta de aluguel, torta, no canto */
+  .etiqueta {
+    position: absolute; top: 44px; right: 52px;
+    transform: rotate(3.5deg);
+    background: var(--creme); color: #2a170c;
+    padding: 12px 26px 14px; border-radius: 2px;
+    font-size: 25px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    box-shadow: 0 12px 26px rgba(0,0,0,.5);
+  }
+  .etiqueta small {
+    display: block; margin-top: 3px;
+    font-family: 'VT323', monospace; font-size: 21px; letter-spacing: .12em;
+    font-weight: 400; color: #6b3f1d;
+  }
+</style>
+</head>
+<body>
+  <div class="halo"></div>
+
+  <div class="conteudo">
+    <div class="marca">LOCADORA</div>
+    <div class="sub">vídeo clube particular</div>
+    <div class="fita-luz"></div>
+    <div class="frase">Não esqueça de rebobinar a fita</div>
+  </div>
+
+  <div class="etiqueta">
+    Aberto
+    <small>todo dia</small>
+  </div>
+
+  <div class="estante">
+    <div class="fitas">
+      <i class="fita"></i><i class="fita"></i><i class="fita"></i><i class="fita"></i>
+      <i class="fita"></i><i class="fita"></i><i class="fita"></i><i class="fita"></i>
+      <i class="fita"></i><i class="fita"></i><i class="fita"></i><i class="fita"></i>
+    </div>
+    <div class="madeira"></div>
+  </div>
+
+  <div class="crt"></div>
+</body>
+</html>

@@ -70,6 +70,15 @@ Já está publicado, de graça, com HTTPS:
 Quem serve as páginas é o **GitHub Pages**, ligado no branch `main`, pasta raiz.
 Todo commit no `main` republica o site sozinho, em cerca de um minuto.
 
+> **O balcão não aparece no menu da vitrine.** Quem chega pelo link vê só
+> *Acervo* e *Filmes alugados* — a tela de senha do balcão confundiria o
+> visitante, já que ela não tranca nada, só guarda o cadastro daquele navegador.
+> Para entrar, digite `/admin.html` no fim do endereço. A página também sai do
+> Google, por causa da tag `noindex`.
+
+Quando o link é colado no WhatsApp, no Instagram ou no Telegram, aparece um
+cartão com o letreiro de neon — é a imagem `assets/social.jpg`.
+
 > ⚠️ **O repositório é público** — exigência do GitHub Pages gratuito. Ninguém
 > acha o endereço sem o link, mas ele não é secreto: quem chegar lá lê o
 > `catalogo.json` e os links dos filmes. A proteção que importa está nos vídeos
@@ -396,6 +405,13 @@ para assistir no YouTube, ou procure outra cópia do filme.
 | Cores do tema | `assets/css/estilo.css`, bloco `:root` no topo |
 | Tamanho das capas | `assets/css/estilo.css`, variável `--capa-l` |
 | Desligar o efeito CRT | Link no rodapé da vitrine |
+| Texto do cartão de compartilhamento | as tags `og:` no topo do `index.html` |
+| Imagem do cartão | `assets/social.jpg` — o desenho dela é `assets/social.html` |
+
+> **Para refazer a imagem do cartão** (depois de trocar o nome da locadora, por
+> exemplo): abra `assets/social.html` no navegador, tire um print de
+> **1200 × 630** e salve por cima de `assets/social.jpg`. O `social.html` não faz
+> parte do site — ele só existe para desenhar essa figura.
 
 ---
 
