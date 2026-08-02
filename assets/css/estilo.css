@@ -1080,6 +1080,11 @@ dialog::backdrop {
   position: relative;
   aspect-ratio: 16 / 9;
   background: #000;
+  /* Em tela baixa e larga o max-height abaixo entra em ação, e o
+     aspect-ratio devolve a conta encolhendo a LARGURA para manter os 16:9.
+     A caixa menor precisa ser centralizada, senão fica encostada à esquerda
+     com todo o preto sobrando de um lado só. */
+  margin-inline: auto;
 }
 .player__tela iframe,
 .player__tela video {
