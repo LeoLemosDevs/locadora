@@ -2,7 +2,7 @@
   "versao": 1,
   "nomeLocadora": "Locadora",
   "assinatura": "vídeo clube particular",
-  "atualizadoEm": "2026-08-02T18:20:05.540Z",
+  "atualizadoEm": "2026-08-02T18:23:47.344Z",
   "categorias": [
     "Ação",
     "Aventura",
@@ -19,6 +19,26 @@
     "Infantil"
   ],
   "filmes": [
+    {
+      "titulo": "KICKBOXER",
+      "tituloOriginal": "",
+      "ano": 1989,
+      "duracao": 127,
+      "classificacao": "14",
+      "nota": 9,
+      "faixa": "Prata",
+      "sinopse": "O filme Kickboxer: O Desafio do Dragão (1989), estrelado por Jean-Claude Van Damme, é um clássico das artes marciais que popularizou o Muay Thai no cinema. Ele está disponível em serviços de streaming como Amazon Prime Video e Looke no Brasil.",
+      "capa": "https://imusic.b-cdn.net/images/item/original/121/0031398837121.jpg?kickboxer-2003-kickboxer-dvd&class=scaled&v=1498394483",
+      "fundo": "",
+      "generos": [
+        "Artes Marciais"
+      ],
+      "destaque": false,
+      "url": "https://youtu.be/RlyEKfeeL2Y",
+      "fonte": "youtube",
+      "id": "c6f5a85f",
+      "adicionadoEm": "2026-08-02T18:23:47.342Z"
+    },
     {
       "titulo": "RESTROCER NUCA, RENDER-SE JAMAIS",
       "tituloOriginal": "",
