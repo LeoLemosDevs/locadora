@@ -2,7 +2,7 @@
   "versao": 1,
   "nomeLocadora": "Locadora",
   "assinatura": "vídeo clube particular",
-  "atualizadoEm": "2026-08-02T00:00:00.000Z",
+  "atualizadoEm": "2026-08-02T16:58:34.471Z",
   "categorias": [
     "Ação",
     "Aventura",
@@ -20,235 +20,25 @@
   ],
   "filmes": [
     {
-      "id": "demo00",
-      "titulo": "Duelo ao Entardecer",
-      "ano": 1968,
+      "id": "5d44aedf",
+      "titulo": "LEÃO BRANCO",
+      "tituloOriginal": "",
+      "ano": 1990,
       "generos": [
-        "Faroeste",
-        "Clássicos"
+        "Artes Marciais"
       ],
-      "sinopse": "Um pistoleiro cansado volta à cidade que jurou nunca mais ver.",
-      "duracao": 121,
+      "sinopse": "“Leão Branco – O Lutador sem Lei” (1990) é um clássico de ação e artes marciais estrelado por Jean-Claude Van Damme, que mistura drama familiar e combates clandestinos. A trama acompanha Lyon Gaultier, um legionário desertor que entra em lutas ilegais nos EUA para ajudar financeiramente a família de seu irmão.",
+      "capa": "https://br.web.img2.acsta.net/pictures/15/06/16/20/05/520871.jpg",
+      "fundo": "",
+      "duracao": 102,
       "classificacao": "14",
-      "nota": 8.4,
-      "destaque": true,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-20T00:00:00Z",
-      "faixa": "Ouro"
-    },
-    {
-      "id": "demo01",
-      "titulo": "Cidade de Neon",
-      "ano": 1987,
-      "generos": [
-        "Ficção Científica",
-        "Ação"
-      ],
-      "sinopse": "Num futuro encharcado de chuva, um detetive caça androides.",
-      "duracao": 117,
-      "classificacao": "16",
-      "nota": 9.1,
-      "destaque": true,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-21T00:00:00Z",
-      "faixa": "Diamante"
-    },
-    {
-      "id": "demo02",
-      "titulo": "O Grande Assalto",
-      "ano": 1974,
-      "generos": [
-        "Ação",
-        "Suspense"
-      ],
-      "sinopse": "Cinco estranhos, um cofre e trinta minutos.",
-      "duracao": 98,
-      "classificacao": "14",
-      "nota": 7.6,
+      "nota": 8.5,
+      "faixa": "Prata",
       "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-22T00:00:00Z",
-      "faixa": "Prata"
-    },
-    {
-      "id": "demo03",
-      "titulo": "Verão de 89",
-      "ano": 1989,
-      "generos": [
-        "Comédia",
-        "Clássicos"
-      ],
-      "sinopse": "As últimas férias antes de tudo mudar.",
-      "duracao": 104,
-      "classificacao": "12",
-      "nota": 7.9,
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-23T00:00:00Z",
-      "faixa": "Bronze"
-    },
-    {
-      "id": "demo04",
-      "titulo": "A Fortaleza no Céu",
-      "ano": 1986,
-      "generos": [
-        "Animes",
-        "Aventura"
-      ],
-      "sinopse": "Uma menina cai do céu segurando um cristal que brilha.",
-      "duracao": 125,
-      "classificacao": "L",
-      "nota": 8.8,
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-24T00:00:00Z",
-      "faixa": "Diamante"
-    },
-    {
-      "id": "demo05",
-      "titulo": "Trilhas do Oeste",
-      "ano": 1962,
-      "generos": [
-        "Faroeste",
-        "Aventura"
-      ],
-      "sinopse": "Uma caravana atravessa o deserto rumo ao território novo.",
-      "duracao": 133,
-      "classificacao": "12",
-      "nota": 7.2,
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-25T00:00:00Z",
-      "faixa": "Bronze"
-    },
-    {
-      "id": "demo06",
-      "titulo": "Casa Silenciosa",
-      "ano": 1979,
-      "generos": [
-        "Terror",
-        "Suspense"
-      ],
-      "sinopse": "A família muda para o interior. A casa já tinha moradores.",
-      "duracao": 92,
-      "classificacao": "18",
-      "nota": 7.4,
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-26T00:00:00Z",
-      "faixa": "Prata"
-    },
-    {
-      "id": "demo07",
-      "titulo": "Ilha dos Piratas",
-      "ano": 1955,
-      "generos": [
-        "Aventura",
-        "Infantil"
-      ],
-      "sinopse": "Dois irmãos encontram um mapa no sótão do avô.",
-      "duracao": 88,
-      "classificacao": "L",
-      "nota": 7.0,
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-27T00:00:00Z",
-      "faixa": "Bronze"
-    },
-    {
-      "id": "demo08",
-      "titulo": "O Último Trem",
-      "ano": 1971,
-      "generos": [
-        "Drama",
-        "Clássicos"
-      ],
-      "sinopse": "Duas horas de viagem para acertar dez anos de silêncio.",
-      "duracao": 110,
-      "classificacao": "12",
-      "nota": 8.2,
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-28T00:00:00Z",
-      "faixa": "Prata"
-    },
-    {
-      "id": "demo09",
-      "titulo": "Punho de Aço",
-      "ano": 1983,
-      "generos": [
-        "Artes Marciais",
-        "Ação"
-      ],
-      "sinopse": "O torneio começa quando o sino toca três vezes.",
-      "duracao": 96,
-      "classificacao": "16",
-      "nota": 7.8,
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-29T00:00:00Z",
-      "faixa": "Ouro"
-    },
-    {
-      "id": "demo10",
-      "titulo": "A Serpente e a Garça",
-      "ano": 1978,
-      "generos": [
-        "Artes Marciais",
-        "Clássicos"
-      ],
-      "sinopse": "Um aprendiz teimoso encontra o único mestre que ainda sabe a forma antiga.",
-      "duracao": 101,
-      "classificacao": "14",
-      "nota": 8.0,
-      "faixa": "Ouro",
-      "destaque": false,
-      "demo": true,
-      "capa": "",
-      "fundo": "",
-      "fonte": "",
-      "url": "",
-      "adicionadoEm": "2026-07-30T00:00:00Z"
+      "demo": false,
+      "fonte": "youtube",
+      "url": "https://youtu.be/geInphkAH0g",
+      "adicionadoEm": "2026-08-02T16:58:34.470Z"
     }
   ]
 }
