@@ -57,21 +57,33 @@ os seus filmes, vá em **Cópia de segurança → ⬆ Importar backup** e escolh
 
 ---
 
-## 2. Colocar no ar de graça (GitHub Pages)
+## 2. O site no ar
 
-1. Crie uma conta em <https://github.com> (grátis).
-2. Crie um repositório **público** chamado, por exemplo, `locadora`.
-3. Envie os arquivos desta pasta para ele (botão *Add file → Upload files* já resolve).
-4. No repositório: **Settings → Pages → Build and deployment**
+Já está publicado, de graça, com HTTPS:
+
+| | |
+|---|---|
+| **Vitrine** | <https://leolemosdevs.github.io/locadora/> |
+| **Balcão** | <https://leolemosdevs.github.io/locadora/admin.html> |
+| Repositório | <https://github.com/LeoLemosDevs/locadora> |
+
+Quem serve as páginas é o **GitHub Pages**, ligado no branch `main`, pasta raiz.
+Todo commit no `main` republica o site sozinho, em cerca de um minuto.
+
+> ⚠️ **O repositório é público** — exigência do GitHub Pages gratuito. Ninguém
+> acha o endereço sem o link, mas ele não é secreto: quem chegar lá lê o
+> `catalogo.json` e os links dos filmes. A proteção que importa está nos vídeos
+> em si — quem não tem acesso ao seu Drive não assiste nada. Se um dia quiser o
+> código escondido e uma tela de login de verdade na frente do site, o caminho é
+> o **Cloudflare Pages**, que aceita repositório privado (veja a seção 9).
+
+### Se precisar refazer em outra conta
+
+1. Crie um repositório **público** chamado `locadora`.
+2. Envie os arquivos desta pasta (botão *Add file → Upload files* resolve).
+3. No repositório: **Settings → Pages → Build and deployment**
    - *Source*: `Deploy from a branch`
    - *Branch*: `main` / pasta `/ (root)` → **Save**
-5. Em cerca de 1 minuto o site fica em:
-
-```
-https://SEU-USUARIO.github.io/locadora/
-```
-
-Endereço grátis, HTTPS incluso, sem domínio para pagar.
 
 > **Quer o endereço mais curto?** Nomeie o repositório como
 > `SEU-USUARIO.github.io` — aí o site fica em `https://SEU-USUARIO.github.io/`.
@@ -384,3 +396,35 @@ para assistir no YouTube, ou procure outra cópia do filme.
 | Cores do tema | `assets/css/estilo.css`, bloco `:root` no topo |
 | Tamanho das capas | `assets/css/estilo.css`, variável `--capa-l` |
 | Desligar o efeito CRT | Link no rodapé da vitrine |
+
+---
+
+## 9. Se um dia quiser o site trancado
+
+O GitHub Pages gratuito obriga o repositório a ser público e não tem como pedir
+senha na entrada. Quem resolve as duas coisas de graça é o **Cloudflare Pages**:
+
+| | GitHub Pages (hoje) | Cloudflare Pages |
+|---|---|---|
+| Endereço | `leolemosdevs.github.io/locadora` | `locadora.pages.dev` |
+| Repositório privado | não | **sim** |
+| Banda | ~100 GB/mês | ilimitada |
+| Login na frente do site | não tem | **sim, grátis até 50 pessoas** |
+
+Como mudar, se quiser:
+
+1. Em <https://github.com/LeoLemosDevs/locadora/settings> → *Danger Zone* →
+   **Change visibility → Private**.
+2. Crie conta em <https://dash.cloudflare.com> (não pede cartão).
+3. **Workers & Pages → Create → Pages → Connect to Git** → escolha `locadora`.
+4. Framework: **None** · Build command: **vazio** · Output directory: `/` → *Deploy*.
+
+Para trancar com login por e-mail: **Zero Trust → Access → Applications → Add an
+application → Self-hosted**, aponte para o endereço e crie uma policy
+*Allow → Emails → o seu e-mail*. Aí nem o `admin.html` nem o `catalogo.json`
+abrem para quem não for você — que é a única forma de resolver de verdade a
+ressalva da seção 7, já que a senha do balcão roda no navegador.
+
+O botão **↥ Publicar no GitHub** do balcão continua funcionando igual: ele faz o
+commit no repositório, e o Cloudflare refaz o deploy sozinho. Muda só quem serve
+as páginas — o repositório segue sendo o "banco de dados".
