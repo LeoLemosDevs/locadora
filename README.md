@@ -71,7 +71,7 @@ Quem serve as páginas é o **GitHub Pages**, ligado no branch `main`, pasta rai
 Todo commit no `main` republica o site sozinho, em cerca de um minuto.
 
 > **O balcão não aparece no menu da vitrine.** Quem chega pelo link vê só
-> *Acervo* e *Filmes alugados* — a tela de senha do balcão confundiria o
+> *Prateleiras de filmes* e *Filmes alugados* — a tela de senha do balcão confundiria o
 > visitante, já que ela não tranca nada, só guarda o cadastro daquele navegador.
 > Para entrar, digite `/admin.html` no fim do endereço. A página também sai do
 > Google, por causa da tag `noindex`.
@@ -337,16 +337,18 @@ ou remover avisos ajusta o rodízio sozinho.
 
 ### A rádio da loja
 
-No canto de baixo à esquerda fica um radinho de madeira, com grade de
-alto-falante, visor âmbar e um cursor de volume. Está sintonizado na
-**Rádio Anos 80** — flashback, new wave, o repertório da época das fitas.
+No canto de cima à direita, ao lado do menu, fica um controle pequeno de rádio:
+teclinha de play, visor âmbar com as barrinhas de VU e um cursor de volume.
+Está sintonizado na **Rádio Anos 80** — flashback, new wave, o repertório da
+época das fitas. No celular ele sobe para o lado do letreiro e fica só com a
+tecla e as barrinhas.
 
 Ele começa **desligado** e não abre conexão nenhuma até você apertar o play: um
 site não pode tocar som sozinho, e mesmo que pudesse, ninguém gosta. Depois
 disso ele lembra o volume e se ficou ligado, e tenta voltar tocando na próxima
 visita — se o navegador barrar, é só apertar de novo.
 
-As dez barrinhas do visor **seguem a música de verdade**, lendo as frequências
+As sete barrinhas do visor **seguem a música de verdade**, lendo as frequências
 do som que está saindo. Quando o navegador não deixa analisar o áudio, elas
 dançam sozinhas por conta do CSS e a música continua igual.
 

@@ -52,9 +52,31 @@
          de senha do admin.html só confundiria quem chega pelo link. O dono
          entra digitando /admin.html. -->
     <nav class="menu">
-      <button type="button" data-aba="acervo" class="ativo">Acervo</button>
+      <button type="button" data-aba="acervo" class="ativo">Prateleiras de filmes</button>
       <button type="button" data-aba="lista">Filmes alugados</button>
     </nav>
+
+    <!-- o radinho da loja, encaixado no canto do cabeçalho -->
+    <div class="radio" id="radio" hidden>
+      <button type="button" class="radio__liga" id="radio-liga" aria-label="Ligar a rádio" aria-pressed="false">
+        <i aria-hidden="true">▶</i>
+      </button>
+
+      <div class="radio__visor">
+        <span class="radio__nome" id="radio-nome">—</span>
+        <span class="radio__linha">
+          <span class="radio__vu" id="radio-vu" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+          <span class="radio__estado" id="radio-estado">desligada</span>
+        </span>
+      </div>
+
+      <input type="range" class="radio__vol" id="radio-volume"
+             min="0" max="100" step="1" value="65" aria-label="Volume da rádio">
+
+      <audio id="radio-som" preload="none" crossorigin="anonymous"></audio>
+    </div>
   </div>
   <div class="fita-luz"></div>
 </header>
@@ -165,31 +187,6 @@
     <button type="button" class="bt bt--pequeno bt--fantasma" id="cobranca-depois">Depois</button>
   </div>
 </div>
-
-<!-- o radinho de prateleira: toca enquanto o freguês escolhe a fita -->
-<aside class="radio" id="radio" hidden>
-  <div class="radio__grade" aria-hidden="true"></div>
-
-  <div class="radio__painel">
-    <div class="radio__visor">
-      <span class="radio__nome" id="radio-nome">—</span>
-      <div class="radio__vu" id="radio-vu" aria-hidden="true">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      </div>
-      <span class="radio__estado" id="radio-estado">desligada</span>
-    </div>
-
-    <div class="radio__botoes">
-      <button type="button" class="radio__liga" id="radio-liga" aria-label="Ligar a rádio" aria-pressed="false">
-        <i aria-hidden="true">▶</i>
-      </button>
-      <input type="range" class="radio__vol" id="radio-volume"
-             min="0" max="100" step="1" value="65" aria-label="Volume da rádio">
-    </div>
-  </div>
-
-  <audio id="radio-som" preload="none" crossorigin="anonymous"></audio>
-</aside>
 
 <!-- o recibo pendurado na lateral, visível enquanto se escolhe as fitas -->
 <aside class="recibo" id="recibo" hidden>
