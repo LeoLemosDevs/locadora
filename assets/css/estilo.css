@@ -342,6 +342,15 @@ main {
 .bt:hover { background: rgba(255, 255, 255, .14); transform: translateY(-1px); }
 .bt:active { transform: translateY(0); }
 
+/* fita sem link cadastrado: o botão precisa parecer apagado, senão o
+   clique que não faz nada passa por defeito */
+.bt:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+.bt:disabled:hover { background: rgba(255, 255, 255, .07); transform: none; }
+
 .bt--principal {
   background: var(--neon-rosa);
   border-color: var(--neon-rosa);

@@ -397,6 +397,12 @@
       return '<span class="selo">' + esc(t) + '</span>';
     }).join('');
 
+    // Sem link cadastrado o player não abre — a ficha já avisa, o banner
+    // também precisa, senão o botão fica clicável e não acontece nada.
+    var semLink = L.reproducao(filme).tipo === 'nenhum';
+    el.vitAssistir.disabled = semLink;
+    el.vitAssistir.textContent = semLink ? 'Sem link cadastrado' : '▶ Assistir';
+
     el.vitrine.hidden = false;
     el.vitrine.dataset.id = filme.id;
   }
