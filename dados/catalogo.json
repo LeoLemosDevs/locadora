@@ -2,7 +2,7 @@
   "versao": 1,
   "nomeLocadora": "Locadora",
   "assinatura": "vídeo clube particular",
-  "atualizadoEm": "2026-08-02T18:33:37.216Z",
+  "atualizadoEm": "2026-08-02T18:37:07.274Z",
   "categorias": [
     "Ação",
     "Aventura",
@@ -19,6 +19,24 @@
     "Infantil"
   ],
   "filmes": [
+    {
+      "titulo": "ÁGUIA NEGRA",
+      "tituloOriginal": "",
+      "ano": 1988,
+      "duracao": null,
+      "classificacao": "14",
+      "nota": null,
+      "faixa": "Bronze",
+      "sinopse": "Após um caça americano cair no mar de Malta com tecnologia secreta a bordo, o governo dos EUA envia o agente Ken Tani, especialista em artes marciais, para recuperar os equipamentos antes que caiam nas mãos da KGB. O vilão Andrei, interpretado por Jean-Claude Van Damme, lidera os agentes soviéticos e se torna o principal adversário de Ken.",
+      "capa": "https://m.media-amazon.com/images/S/pv-target-images/d9445c19e710e3866965c00a35da45eca25c03c03024f901d4a5c9bbc9008e06.jpg",
+      "fundo": "",
+      "generos": [],
+      "destaque": false,
+      "url": "https://youtu.be/_blTn2XbB9w",
+      "fonte": "youtube",
+      "id": "f5deac3f",
+      "adicionadoEm": "2026-08-02T18:37:07.273Z"
+    },
     {
       "titulo": "O REI DOS KICKBOXERS",
       "tituloOriginal": "",
