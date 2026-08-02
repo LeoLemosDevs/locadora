@@ -2,7 +2,7 @@
   "versao": 1,
   "nomeLocadora": "Locadora",
   "assinatura": "vídeo clube particular",
-  "atualizadoEm": "2026-08-02T16:58:34.471Z",
+  "atualizadoEm": "2026-08-02T18:20:05.540Z",
   "categorias": [
     "Ação",
     "Aventura",
@@ -19,6 +19,26 @@
     "Infantil"
   ],
   "filmes": [
+    {
+      "titulo": "RESTROCER NUCA, RENDER-SE JAMAIS",
+      "tituloOriginal": "",
+      "ano": 1986,
+      "duracao": 115,
+      "classificacao": "14",
+      "nota": 8,
+      "faixa": "Prata",
+      "sinopse": "O filme Retroceder Nunca, Render-se Jamais (título original No Retreat, No Surrender, 1986) está disponível oficialmente em streaming no Amazon Prime Video e também pode ser encontrado em plataformas como Looke. É um clássico das artes marciais que marcou o início da carreira de Jean-Claude Van Damme",
+      "capa": "https://br.web.img3.acsta.net/pictures/15/06/15/20/19/524828.jpg",
+      "fundo": "",
+      "generos": [
+        "Artes Marciais"
+      ],
+      "destaque": false,
+      "url": "https://youtu.be/U9P7XV6gDvw",
+      "fonte": "youtube",
+      "id": "366506df",
+      "adicionadoEm": "2026-08-02T18:20:05.539Z"
+    },
     {
       "id": "5d44aedf",
       "titulo": "LEÃO BRANCO",
